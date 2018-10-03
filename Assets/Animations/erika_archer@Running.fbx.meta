@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4da85a680d1008f41bf10b0c1df87540
+guid: a18590233d1bc894fb21eae574d726b3
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -157,7 +157,7 @@ ModelImporter:
     4300002: Erika_Archer_Eyes_Mesh
     4300004: Erika_Archer_Eyelashes_Mesh
     4300006: Erika_Archer_Body_Mesh
-    7400000: mixamo.com
+    7400000: Running
     9500000: //RootNode
     13700000: Erika_Archer_Body_Mesh
     13700002: Erika_Archer_Clothes_Mesh
@@ -190,7 +190,35 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Running
+      takeName: mixamo.com
+      firstFrame: 0
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

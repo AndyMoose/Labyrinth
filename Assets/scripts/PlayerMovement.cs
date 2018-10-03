@@ -7,10 +7,13 @@ public class PlayerMovement : MonoBehaviour {
     private CharacterController characterCont;
     private float maxSpeed;
     private float gravity = -9.8f;
+    private bool isMoving;
+    [SerializeField] Animator animations;
 
     void Start () {
         characterCont = GetComponent<CharacterController>();
         maxSpeed = 5f;
+        isMoving = false;
 	}
 	
 	void Update () {
@@ -30,6 +33,15 @@ public class PlayerMovement : MonoBehaviour {
         velocity = transform.TransformDirection(velocity);
         characterCont.Move(velocity);
 
-        
+        if (velocity != Vector3.zero && !isMoving)
+        {
+            animations.SetBool("isMoving", true);
+            isMoving = true;
+        }
+        else if (velocity == Vector3.zero)
+        {
+            animations.SetBool("isMoving", false);
+            isMoving = false;
+        }        
     }
 }

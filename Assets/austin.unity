@@ -369,6 +369,11 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &1467001813 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 84a59658a02ecc44dbdac2a959559621,
+    type: 3}
+  m_PrefabInternal: {fileID: 2077551081}
 --- !u!4 &1467001814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 84a59658a02ecc44dbdac2a959559621,
@@ -385,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a66a505a8ca1f124594023b841c7f196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animations: {fileID: 1467001813}
 --- !u!114 &1467001817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,7 +403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axis: 1
-  minimumV: 0
+  sensitivityH: 10
+  sensitivityV: 10
   rotationX: 0
 --- !u!143 &1467001818
 CharacterController:
@@ -441,7 +448,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1580789505}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4, z: 0.35}
+  m_LocalPosition: {x: 0, y: 1.8, z: 0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1467001814}
@@ -506,7 +513,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axis: 2
-  minimumV: -60
+  sensitivityH: 10
+  sensitivityV: 10
   rotationX: 0
 --- !u!1001 &2077551081
 Prefab:
@@ -547,6 +555,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4d8816f6276628c4daf5cae97a5396f5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
   m_IsPrefabAsset: 0
