@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    private CharacterController characterCont;
     private float maxSpeed;
     private float gravity = -9.8f;
-    private bool isMoving;
-    [SerializeField] Animator animations;
+    [SerializeField] private Animator animations;
+    [SerializeField] private CharacterController characterCont;
 
     void Start () {
-        characterCont = GetComponent<CharacterController>();
         maxSpeed = 5f;
-        isMoving = false;
 	}
 	
 	void Update () {
