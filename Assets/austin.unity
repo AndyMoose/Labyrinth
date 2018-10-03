@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animations: {fileID: 1467001813}
+  characterCont: {fileID: 1467001818}
 --- !u!114 &1467001817
 MonoBehaviour:
   m_ObjectHideFlags: 0
