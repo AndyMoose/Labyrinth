@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 velocity = new Vector3(Xinput, 0, Zinput);
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
         //keeps player on the ground
-        velocity.y = gravity;
+       // velocity.y = gravity;
 
         //move the player
         velocity *= Time.deltaTime;
