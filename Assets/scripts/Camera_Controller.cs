@@ -12,23 +12,29 @@ public class Camera_Controller : MonoBehaviour {
 
     public RotationAxis axis = RotationAxis.RotMouseX;
 
-    [SerializeField] private float minimumV;
-    private float maximumV = 70f;
+    //set the maximum and minimum vertical angles the player can look
+    private float minimumV = 65f;
+    private float maximumV = 65f;
+
+    //set the camera sensitivity
     private float sensitivityH = 10f;
     private float sensitivityV = 10f;
 
     public float rotationX = 0;
-    // Update is called once per frame
     void Update() {
 
+        //rotate horizontally
         if (axis == RotationAxis.RotMouseX)
         {
             transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityH, 0);
-        } else if (axis == RotationAxis.RotMouseY)
+        }       
+        else if (axis == RotationAxis.RotMouseY)
         {
             rotationX -= Input.GetAxis("Mouse Y") * sensitivityV;
+            //clamps the rotations to the set values
             rotationX = Mathf.Clamp(rotationX, minimumV, maximumV);
 
+            //rotate vertically
             float rotationY = transform.localEulerAngles.y;
             transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
         }
