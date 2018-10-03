@@ -13,12 +13,12 @@ public class Camera_Controller : MonoBehaviour {
     public RotationAxis axis = RotationAxis.RotMouseX;
 
     //set the maximum and minimum vertical angles the player can look
-    private float minimumV = 65f;
+    private float minimumV = -65f;
     private float maximumV = 65f;
 
     //set the camera sensitivity
-    private float sensitivityH = 10f;
-    private float sensitivityV = 10f;
+    [SerializeField] private float sensitivityH;
+    [SerializeField] private float sensitivityV;
 
     public float rotationX = 0;
     void Update() {
