@@ -26,22 +26,15 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 velocity = new Vector3(Xinput, 0, Zinput);
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
         //keeps player on the ground
-       // velocity.y = gravity;
+        velocity.y = gravity;
+
+        //changes the state of the movement animations based on the velocity.
+        animations.SetFloat("velX", velocity.x);
+        animations.SetFloat("velZ", velocity.z);
 
         //move the player
         velocity *= Time.deltaTime;
         velocity = transform.TransformDirection(velocity);
         characterCont.Move(velocity);
-
-        if (velocity != Vector3.zero && !isMoving)
-        {
-            animations.SetBool("isMoving", true);
-            isMoving = true;
-        }
-        else if (velocity == Vector3.zero)
-        {
-            animations.SetBool("isMoving", false);
-            isMoving = false;
-        }        
     }
 }
