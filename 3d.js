@@ -67,9 +67,9 @@ function createWall(x, y, side, geometry) {
     var normal = new THREE.Vector3(0, 1, 0); //optional
     var color = new THREE.Color(0xffaa00); //optional
     var materialIndex = 1; //optional
-    console.log(geometry.vertices);
-    console.log(verts);
-    console.log(geometry.vertices.length);
+    //console.log(geometry.vertices);
+    //console.log(verts);
+    //console.log(geometry.vertices.length);
     var face = new THREE.Face3(verts + 1, verts + 2, verts + 3, normal, color, materialIndex);
     var face2 = new THREE.Face3(verts + 2, verts + 3, verts + 4, normal, color, materialIndex);
 

@@ -56,8 +56,9 @@ function addPlacement(div) {
     div.appendChild(bottom);
 
 
-    var dvs = [top, bottom, left, right, div];
-    dvs.forEach((d) => { d.style.backgroundColor = ncolor; })
+    //var dvs = [top, bottom, left, right, div];
+    //dvs.forEach((d) => { d.style.backgroundColor = ncolor; })
+    div.style.backgroundColor = ncolor;
 
     var dvsa = [top, bottom, left, right];
     dvsa.forEach((d) => {
