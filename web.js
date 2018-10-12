@@ -1,6 +1,7 @@
 const x = 20
 const y = 20
 const ncolor = "#2196F3"
+const scolorClass = "w3-red";
 
 var map = [];
 
@@ -17,6 +18,7 @@ function createTable() {
             var col = document.createElement("td");
             col.style.backgroundColor = ncolor;
             var dv = document.createElement("div");
+            dv.setAttribute("xy", j + ":" + i);
             dv = addPlacement(dv);
             col.appendChild(dv);
             rw.appendChild(col);
@@ -35,17 +37,22 @@ function addPlacement(div) {
     var right = document.createElement("div")
     var bottom = document.createElement("div")
 
+    top.setAttribute("tp", 0);
+    left.setAttribute("tp", 1);
+    right.setAttribute("tp", 2);
+    bottom.setAttribute("tp", 3);
+
     top.className = "w3-display-topmiddle"
     bottom.className = "w3-display-bottommiddle"
     left.className = "w3-display-left"
     right.className = "w3-display-right"
 
-    
+
     div.appendChild(left);
     div.appendChild(right);
     div.appendChild(top);
     div.appendChild(bottom);
-    
+
 
     var dvs = [top, bottom, left, right, div];
     dvs.forEach((d) => { d.style.backgroundColor = ncolor; })
@@ -55,7 +62,22 @@ function addPlacement(div) {
         //hover
         d.className += " w3-hover-red"
         //onclick
-        d.onclick = () => { d.className += " w3-red" };
+        d.onclick = () => {
+            var xy = d.parentElement.getAttribute("xy")
+            var lx = xy.split(":");
+            var ly = lx[1];
+            lx = lx[0];
+
+            if (map[lx][ly][d.getAttribute("tp")] == 0) {
+                d.className += " " + scolorClass
+                map[lx][ly][d.getAttribute("tp")] = 1;
+            } else {
+                d.className = d.className.split(" " + scolorClass).join("");
+                map[lx][ly][d.getAttribute("tp")] = 0;
+            }
+
+
+        };
     })
 
     var tb = [top, bottom];
