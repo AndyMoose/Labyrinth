@@ -1,13 +1,10 @@
+var verts = -1; //-1 offset built in
 function createModel(file) {
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     var cube = new THREE.Mesh(geometry, material);
 
-    for (var i = 0; i < y; i++) {
-        for (var j = 0; j < x; j++) {
-            
-        }
-    }
+    geometry = createWalls(geometry);
 
     var exporter = new THREE.ColladaExporter();
 
@@ -16,6 +13,24 @@ function createModel(file) {
         //saveString(result.data, 'scene.dae');
         download(file, result.data);
     });
+}
+
+function createWalls(geometry) {
+    for (var i = 0; i < y; i++) {
+        for (var j = 0; j < x; j++) {
+            for (var z = 0; z < 4; z++) {
+                if (map[j][i][z] == 1) {
+                    geometry = createWall(j, i, z, geometry);
+                }
+            }
+        }
+    }
+
+    return geometry;
+}
+function createWall(x, y, side, geometry) {
+
+    return geometry;
 }
 
 function createFloorGeometry() {
@@ -27,6 +42,7 @@ function createFloorGeometry() {
         new THREE.Vector3(1 * x * tileSize, 0, -1 * y * tileSize),
         new THREE.Vector3(1 * x * tileSize, 0, 1 * y * tileSize)
     );
+    verts += 4;
 
     var normal = new THREE.Vector3(0, 1, 0); //optional
     var color = new THREE.Color(0xffaa00); //optional

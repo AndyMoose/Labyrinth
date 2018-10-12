@@ -1,6 +1,7 @@
 const x = 20
 const y = 20
 const tileSize = 5
+const wallSize = 1 //not used right now
 const ncolor = "#2196F3"
 const scolorClass = "w3-red";
 
