@@ -23,7 +23,7 @@ function createWalls(geometry) {
         for (var j = 0; j < x; j++) {
             for (var z = 0; z < 4; z++) {
                 if (map[j][i][z] == 1) {
-                    console.log(j+":"+i+":"+z);
+                    //console.log(j+":"+i+":"+z);
                     geometry = createWall(j, i, z, geometry);
                 }
             }
