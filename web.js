@@ -1,5 +1,6 @@
 const x = 20
 const y = 20
+const tileSize = 5
 const ncolor = "#2196F3"
 const scolorClass = "w3-red";
 
