@@ -12,15 +12,30 @@ public class Camera_Controller : MonoBehaviour {
 
     public RotationAxis axis = RotationAxis.RotMouseX;
 
-    //set the maximum and minimum vertical angles the player can look
-    private float minimumV = -65f;
-    private float maximumV = 65f;
+    //maximum and minimum vertical angles the player can look
+    private float minimumV;
+    private float maximumV;
 
     //set the camera sensitivity
     [SerializeField] private float sensitivityH;
     [SerializeField] private float sensitivityV;
 
     public float rotationX = 0;
+
+    private void Start()
+    {
+        minimumV = -65f;
+        maximumV = 65f;
+
+        //lock mouse cursor and make it invisible
+        Cursor.lockState = CursorLockMode.Locked;
+        //unlock mouse cursor when escape is pressed
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
     void Update() {
 
         //rotate horizontally

@@ -5,13 +5,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     private float maxSpeed;
-    private float gravity = -9.8f;
+    private float gravity;
     [SerializeField] private Animator animations;
     [SerializeField] private CharacterController characterCont;
 
     void Start () {
         maxSpeed = 5f;
-	}
+        gravity = -9.8f;
+    }
 	
 	void Update () {
 
