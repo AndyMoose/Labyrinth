@@ -94,9 +94,9 @@ function createFloorGeometry() {
     geometry.vertices.push(
         //center at 0,0 rather than edge prob need to change it
         // (or change createwall to place in -x/z)
-        new THREE.Vector3(-1 * x * tileSize, 0, -1 * y * tileSize), //x, y, z
-        new THREE.Vector3(-1 * x * tileSize, 0, 1 * y * tileSize),
-        new THREE.Vector3(1 * x * tileSize, 0, -1 * y * tileSize),
+        new THREE.Vector3(-0 * x * tileSize, 0, -0 * y * tileSize), //x, y, z
+        new THREE.Vector3(-0 * x * tileSize, 0, 1 * y * tileSize),
+        new THREE.Vector3(1 * x * tileSize, 0, -0 * y * tileSize),
         new THREE.Vector3(1 * x * tileSize, 0, 1 * y * tileSize)
     );
     verts += 4;
