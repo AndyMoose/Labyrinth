@@ -20,6 +20,9 @@ public class Minotaur_Test : MonoBehaviour {
     void Update()
     {
         AnimatorStateInfo stateInfo = animations.GetCurrentAnimatorStateInfo(0);
+
+        //sets "blend" variable in blend tree depending on if minotaur is walking or running
+        //for test purposes, switch using space key
         if (Input.GetKeyDown(KeyCode.Space) && !running)
         {
             running = true;
@@ -39,6 +42,10 @@ public class Minotaur_Test : MonoBehaviour {
             t -= .02f;
         }
         
-        cc.Move(new Vector3(0.015f,0f,0.0f));
+        //changes speed based on running or walking
+        if (!running)
+            cc.Move(new Vector3(0.015f, 0f, 0.0f));
+        else
+            cc.Move(new Vector3(0.1f, 0f, 0.0f));
     }
 }
