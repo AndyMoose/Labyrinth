@@ -1,5 +1,6 @@
 var verts = -1; //-1 offset built in
 function createModel(file) {
+    verts = -1;
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
