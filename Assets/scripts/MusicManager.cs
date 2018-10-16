@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class MusicManager : MonoBehaviour
 {
 	// Audio players components.
 	public AudioSource EffectsSource;
 	public AudioSource MusicSource;
+    
 
 	// Random pitch adjustment range.
 	public float LowPitchRange = .95f;
 	public float HighPitchRange = 1.05f;
+    public float musicVolume = 0f;
+    public float sfxVolume = 0f;
+    public float mainVolume = 1f;
 
-	// Singleton instance.
-	public static SoundManager Instance = null;
+    // Singleton instance.
+    public static MusicManager Instance = null;
 
 	// Initialize the singleton instance.
 	private void Awake()
@@ -44,7 +48,8 @@ public class SoundManager : MonoBehaviour
 	public void PlayMusic(AudioClip clip)
 	{
 		MusicSource.clip = clip;
-		MusicSource.Play();
+        MusicSource.volume = mainVolume * musicVolume;
+        MusicSource.Play();
 	}
 
 	// Play a random clip from an array, and randomize the pitch slightly.
@@ -55,6 +60,7 @@ public class SoundManager : MonoBehaviour
 
 		EffectsSource.pitch = randomPitch;
 		EffectsSource.clip = clips[randomIndex];
+        EffectsSource.volume = mainVolume * sfxVolume;
 		EffectsSource.Play();
 	}
 
