@@ -2,6 +2,7 @@ var verts = -1; //-1 offset built in
 var movement = [];
 function createModel(file) {
     verts = -1;
+    clearMovement();
 
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -18,17 +19,20 @@ function createModel(file) {
 
         //saveString(result.data, 'scene.dae');
         download(file, result.data);
+        download(file+".txt",JSON.parse(map));
     });
 }
 
 function clearMovement()
 {
+    var scale = 5;
     movement = [];
-    for(var i = 0; i < y; i++)
+    for(var i = 0; i < y * scale; i++)
     {
-        for(var j = 0; j < x; i++)
+        movement.push([]);
+        for(var j = 0; j < x * scale; i++)
         {
-            
+            movement[i].push(0);
         }
     }
 }
