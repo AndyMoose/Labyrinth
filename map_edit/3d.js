@@ -24,9 +24,12 @@ function createModel(file) {
 function clearMovement()
 {
     movement = [];
-    for(var i = 0; i < x; i++)
+    for(var i = 0; i < y; i++)
     {
-        
+        for(var j = 0; j < x; i++)
+        {
+            
+        }
     }
 }
 
