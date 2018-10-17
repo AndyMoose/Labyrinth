@@ -1,5 +1,6 @@
 const x = 20
 const y = 20
+//x and y need to be the same for now
 const tileSize = 5
 const wallSize = 0 //not used right now (kinda)
 const ncolor = "#2196F3"
