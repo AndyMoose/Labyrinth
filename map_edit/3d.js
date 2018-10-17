@@ -1,4 +1,5 @@
 var verts = -1; //-1 offset built in
+const scale = 5;
 var movement = [];
 function createModel(file) {
     verts = -1;
@@ -7,7 +8,7 @@ function createModel(file) {
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-    
+
 
     geometry = createWalls(geometry);
 
@@ -19,19 +20,16 @@ function createModel(file) {
 
         //saveString(result.data, 'scene.dae');
         download(file, result.data);
-        download(file+".txt",JSON.parse(map));
+        download(file + ".txt", JSON.parse(map));
     });
 }
 
-function clearMovement()
-{
-    var scale = 5;
+function clearMovement() {
+
     movement = [];
-    for(var i = 0; i < y * scale; i++)
-    {
+    for (var i = 0; i < y * scale; i++) {
         movement.push([]);
-        for(var j = 0; j < x * scale; i++)
-        {
+        for (var j = 0; j < x * scale; i++) {
             movement[i].push(0);
         }
     }
@@ -63,8 +61,19 @@ function createWall(x, y, side, geometry) {
             [posx, 5, posz],
             [posx + tileSize, tileSize, posz]
         ];
+        //scale x/y
+        var sx = scale * x;
+        var sy = scale * y;
         if (side == 3) {
-            vertsz.forEach((v)=>{v[2]+= tileSize})
+            vertsz.forEach((v) => { v[2] += tileSize })
+            for (var z = 0; z < scale; z++) {
+                movement[sx + z][sy + scale - 1] = 1;
+            }
+
+        } else {
+            for (var z = 0; z < scale; z++) {
+                movement[sx + z][sy] = 1;
+            }
         }
         gv = vertsz;
     } else {
@@ -76,7 +85,15 @@ function createWall(x, y, side, geometry) {
             [posx, 5, posz + tileSize]
         ];
         if (side == 2) {
-            vertsz.forEach((v)=>{v[0]+= tileSize})
+            vertsz.forEach((v) => { v[0] += tileSize })
+            for (var z = 0; z < scale; z++) {
+                movement[sx+scale - 1][sy + z] = 1;
+            }
+
+        } else {
+            for (var z = 0; z < scale; z++) {
+                movement[sx + scale - 1][sy + z] = 1;
+            }
         }
         gv = vertsz;
     }
