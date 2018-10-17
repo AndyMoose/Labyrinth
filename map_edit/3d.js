@@ -19,9 +19,20 @@ function createModel(file) {
     exporter.parse(cube, function (result) {
 
         //saveString(result.data, 'scene.dae');
-        download(file, result.data);
-        download(file + ".txt", JSON.stringify(map));
-        download(file+"_movment.txt", JSON.stringify(movement));
+        //download(file, result.data);
+        //download(file + ".txt", JSON.stringify(map));
+        //download(file + "_movment.txt", JSON.stringify(movement));
+
+        var zip = new JSZip();
+        zip.file(file, result.data);
+        zip.file(file+".txt", JSON.stringify(map));
+        zip.file(file+"_movment.txt", JSON.stringify(map));
+
+        zip.generateAsync({ type: "blob" })
+            .then(function (content) {
+                // see FileSaver.js
+                download("map.zip", content);
+            });
     });
 }
 
@@ -88,7 +99,7 @@ function createWall(x, y, side, geometry) {
         if (side == 2) {
             vertsz.forEach((v) => { v[0] += tileSize })
             for (var z = 0; z < scale; z++) {
-                movement[sx+scale - 1][sy + z] = 1;
+                movement[sx + scale - 1][sy + z] = 1;
             }
 
         } else {
