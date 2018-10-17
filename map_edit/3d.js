@@ -20,7 +20,8 @@ function createModel(file) {
 
         //saveString(result.data, 'scene.dae');
         download(file, result.data);
-        download(file + ".txt", JSON.parse(map));
+        download(file + ".txt", JSON.stringify(map));
+        download(file+"_movment.txt", JSON.stringify(movement));
     });
 }
 
