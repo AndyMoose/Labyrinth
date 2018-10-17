@@ -1,6 +1,8 @@
 var verts = -1; //-1 offset built in
+var movement = [];
 function createModel(file) {
     verts = -1;
+
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
@@ -17,6 +19,15 @@ function createModel(file) {
         //saveString(result.data, 'scene.dae');
         download(file, result.data);
     });
+}
+
+function clearMovement()
+{
+    movement = [];
+    for(var i = 0; i < x; i++)
+    {
+        
+    }
 }
 
 function createWalls(geometry) {
