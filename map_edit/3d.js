@@ -1,10 +1,14 @@
 var verts = -1; //-1 offset built in
+const scale = 5;
+var movement = [];
 function createModel(file) {
     verts = -1;
+    clearMovement();
+
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-    
+
 
     geometry = createWalls(geometry);
 
@@ -15,8 +19,34 @@ function createModel(file) {
     exporter.parse(cube, function (result) {
 
         //saveString(result.data, 'scene.dae');
-        download(file, result.data);
+        //download(file, result.data);
+        //download(file + ".txt", JSON.stringify(map));
+        //download(file + "_movment.txt", JSON.stringify(movement));
+
+        var zip = new JSZip();
+        zip.file(file, result.data);
+        zip.file(file + ".txt", JSON.stringify(map));
+        zip.file(file + "_movment.txt", JSON.stringify(map));
+
+        zip.generateAsync({ type: "blob" })
+            .then(function (content) {
+                // see FileSaver.js
+                //download("map.zip", content);
+                saveAs(content, "map.zip");
+            });
     });
+}
+
+function clearMovement() {
+
+    movement = [];
+    for (var i = 0; i < y * scale; i++) {
+        movement.push([]);
+        for (var j = 0; j < x * scale; j++) {
+            //console.log(JSON.stringify(movement));
+            movement[i].push(0);
+        }
+    }
 }
 
 function createWalls(geometry) {
@@ -36,6 +66,10 @@ function createWalls(geometry) {
 function createWall(x, y, side, geometry) {
     var posx = x * tileSize;
     var posz = y * tileSize; //0 top, 3 bottom, 1 left, 2 right
+
+    var sx = scale * x;
+    var sy = scale * y;
+
     var gv = [];
     if (side == 0 || side == 3) {
         //top/bottom
@@ -45,8 +79,18 @@ function createWall(x, y, side, geometry) {
             [posx, 5, posz],
             [posx + tileSize, tileSize, posz]
         ];
+        //scale x/y
+
         if (side == 3) {
-            vertsz.forEach((v)=>{v[2]+= tileSize})
+            vertsz.forEach((v) => { v[2] += tileSize })
+            for (var z = 0; z < scale; z++) {
+                movement[sx + z][sy + scale - 1] = 1;
+            }
+
+        } else {
+            for (var z = 0; z < scale; z++) {
+                movement[sx + z][sy] = 1;
+            }
         }
         gv = vertsz;
     } else {
@@ -58,7 +102,15 @@ function createWall(x, y, side, geometry) {
             [posx, 5, posz + tileSize]
         ];
         if (side == 2) {
-            vertsz.forEach((v)=>{v[0]+= tileSize})
+            vertsz.forEach((v) => { v[0] += tileSize })
+            for (var z = 0; z < scale; z++) {
+                movement[sx + scale - 1][sy + z] = 1;
+            }
+
+        } else {
+            for (var z = 0; z < scale; z++) {
+                movement[sx + scale - 1][sy + z] = 1;
+            }
         }
         gv = vertsz;
     }
