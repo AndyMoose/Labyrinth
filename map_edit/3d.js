@@ -41,7 +41,8 @@ function clearMovement() {
     movement = [];
     for (var i = 0; i < y * scale; i++) {
         movement.push([]);
-        for (var j = 0; j < x * scale; i++) {
+        for (var j = 0; j < x * scale; j++) {
+            //console.log(JSON.stringify(movement));
             movement[i].push(0);
         }
     }
