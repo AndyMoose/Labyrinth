@@ -7,10 +7,12 @@ const ncolor = "#2196F3"
 const scolorClass = "w3-red";
 
 var map = [];
+var tableG;
 
 function createTable() {
     var dvp = document.getElementById("main");
     var tbl = document.createElement("table")
+    tableG = tbl;
     //ondrop="dropHandler(event);"
     //dvp.addEventListener("drop", dropHandler);
     //dvp.addEventListener("drag", dragOverHandler);
@@ -113,7 +115,7 @@ function addPlacement(div) {
 
 function dropHandler(ev) {
     console.log('File(s) dropped');
-    
+
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
     var reader = new FileReader();
@@ -128,17 +130,25 @@ function dropHandler(ev) {
 
                 reader.onload = function (e) {
                     var text = reader.result;
-                    console.log(text);
+                    map = JSON.parse(text);
+                    loadmap();
                 }
                 reader.readAsText(file);
+
             }
         }
     } else {
         // Use DataTransfer interface to access the file(s)
         for (var i = 0; i < ev.dataTransfer.files.length; i++) {
             console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
-            console.log(ev.dataTransfer.files[i].getData("text/plain"));
+
         }
+        reader.onload = function (e) {
+            var text = reader.result;
+            map = JSON.parse(text);
+            loadmap();
+        }
+        reader.readAsText(ev.dataTransfer.files[0]);
     }
 
     // Pass event to removeDragData for cleanup
@@ -163,5 +173,20 @@ function removeDragData(ev) {
     }
 }
 
+function loadmap() {
+    var mapping = [1, 2, 0, 3] //[1,2,0,3];
+    for (var i = 0; i < y; i++) {
+        for (var j = 0; j < x; j++) {
+            for (var z = 0; z < 4; z++) {
+                if (map[j][i][z] === 1) {
+                    //1,2,0,3
+                    //console.log(tableG.children[i].children[j].children[0].children[mapping[z]])
+                    //tableG.children[i].children[j].children[0].children[mapping[z]].click();
+                    tableG.children[i].children[j].children[0].children[mapping[z]].className += " " + scolorClass
+                }
+            }
+        }
+    }
+}
 
 createTable();
