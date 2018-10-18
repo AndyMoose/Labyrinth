@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController characterCont;
 
     private bool isAttacking;
-    private bool isDead;
+    public bool isDead;
+
+    Camera_Controller cameraCont;
 
     void Start()
     {
+        cameraCont = GetComponent<Camera_Controller>();       
         maxSpeed = 5f;
         gravity = -9.8f;
         isAttacking = false;
@@ -30,46 +33,52 @@ public class PlayerController : MonoBehaviour
     void PlayerMovement()
     {
         //get the forward and sideways movement values
-        float Xinput = Input.GetAxis("Horizontal") * maxSpeed;
-        float Zinput = Input.GetAxis("Vertical") * maxSpeed;
-
-        //sets velocity vector
-        Vector3 velocity = new Vector3(Xinput, 0, Zinput);
-
-        if (velocity.z < 0)
+        if (!isDead)
         {
-            velocity = Vector3.ClampMagnitude(velocity, maxSpeed/2f);
-        } else
-        {
-            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+            float Xinput = Input.GetAxis("Horizontal") * maxSpeed;
+            float Zinput = Input.GetAxis("Vertical") * maxSpeed;
+
+            //sets velocity vector
+            Vector3 velocity = new Vector3(Xinput, 0, Zinput);
+
+            if (velocity.z < 0)
+            {
+                velocity = Vector3.ClampMagnitude(velocity, maxSpeed / 2f);
+            }
+            else
+            {
+                velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+            }
+
+            //keeps player on the ground
+            velocity.y = gravity;
+
+            //changes the state of the movement animations based on the velocity.
+            animations.SetFloat("velX", velocity.x);
+            animations.SetFloat("velZ", velocity.z);
+
+            //move the player
+            velocity *= Time.deltaTime;
+            velocity = transform.TransformDirection(velocity);
+            characterCont.Move(velocity);
         }
-        
-
-        //keeps player on the ground
-        velocity.y = gravity;
-
-        //changes the state of the movement animations based on the velocity.
-        animations.SetFloat("velX", velocity.x);
-        animations.SetFloat("velZ", velocity.z);
-
-        //move the player
-        velocity *= Time.deltaTime;
-        velocity = transform.TransformDirection(velocity);
-        characterCont.Move(velocity);
     }
 
     void PlayerAttack()
     {
         //gets left mouse button 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttacking)
+        if (!isDead)
         {
-            isAttacking = true;
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttacking)
+            {
+                isAttacking = true;
+            }
+            else
+            {
+                isAttacking = false;
+            }
+            animations.SetBool("isAttacking", isAttacking);
         }
-        else
-        {
-            isAttacking = false;
-        }
-        animations.SetBool("isAttacking", isAttacking);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -79,7 +88,6 @@ public class PlayerController : MonoBehaviour
         if (hit.gameObject.tag == "minotaur")
         {
             animations.SetTrigger("isHit");
-            characterCont = null;
             isDead = true;
         }
         
