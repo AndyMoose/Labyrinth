@@ -9,6 +9,7 @@ function createModel() {
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 ,side: THREE.DoubleSided});
     var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 ,side: THREE.DoubleSided});
+    
 
 
     geometry = createWalls(geometry);
@@ -126,11 +127,15 @@ function createWall(x, y, side, geometry) {
     //console.log(geometry.vertices.length);
     var face = new THREE.Face3(verts + 1, verts + 2, verts + 3, normal, color, materialIndex);
     var face2 = new THREE.Face3(verts + 2, verts + 3, verts + 4, normal, color, materialIndex);
+    var face3 = new THREE.Face3(verts + 3, verts + 2, verts + 1, normal, color, materialIndex);
+    var face4 = new THREE.Face3(verts + 4, verts + 3, verts + 2, normal, color, materialIndex);
 
     verts += 4;
 
     geometry.faces.push(face);
     geometry.faces.push(face2);
+    geometry.faces.push(face3);
+    geometry.faces.push(face4);
 
     geometry.computeBoundingBox();
 
@@ -161,8 +166,13 @@ function createFloorGeometry() {
     var face = new THREE.Face3(0, 1, 2, normal, color, materialIndex);
     var face2 = new THREE.Face3(1, 2, 3, normal, color, materialIndex);
 
+    var face3 = new THREE.Face3(2, 1, 0, normal, color, materialIndex);
+    var face4 = new THREE.Face3(3, 2, 1, normal, color, materialIndex);
+
     geometry.faces.push(face);
     geometry.faces.push(face2);
+    geometry.faces.push(face3);
+    geometry.faces.push(face4);
 
     geometry.computeBoundingBox();
     return geometry;
