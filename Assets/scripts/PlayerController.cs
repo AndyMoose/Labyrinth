@@ -11,18 +11,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController characterCont;
 
     private bool isAttacking;
+    private bool isHit;
 
     void Start()
     {
         maxSpeed = 5f;
         gravity = -9.8f;
         isAttacking = false;
+        isHit = false;
     }
 
     void Update()
     {
-            PlayerAttack();
-            PlayerMovement();
+        PlayerAttack();
+        PlayerMovement();
     }
 
     void PlayerMovement()
@@ -34,7 +36,14 @@ public class PlayerController : MonoBehaviour
         //sets velocity vector
         Vector3 velocity = new Vector3(Xinput, 0, Zinput);
 
-        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        if (velocity.z < 0)
+        {
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed/2f);
+        } else
+        {
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        }
+        
 
         //keeps player on the ground
         velocity.y = gravity;
@@ -47,11 +56,11 @@ public class PlayerController : MonoBehaviour
         velocity *= Time.deltaTime;
         velocity = transform.TransformDirection(velocity);
         characterCont.Move(velocity);
-
     }
 
     void PlayerAttack()
     {
+        //gets left mouse button 
         if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttacking)
         {
             isAttacking = true;
@@ -61,5 +70,21 @@ public class PlayerController : MonoBehaviour
             isAttacking = false;
         }
         animations.SetBool("isAttacking", isAttacking);
+    }
+
+    void PlayerHit(Collision collision)
+    {
+        //need to get collision between minotaur and player, if the minotaur is charging then set isHit to true, otherwise its false.
+        //Player will not get up when they are hit.
+        if(collision.gameObject.tag == "minotaur")
+        {
+            isHit = true;
+            animations.SetBool("isHit", isHit);
+            isHit = false;
+        } else
+        {
+            isHit = false;
+            return;
+        }
     }
 }
