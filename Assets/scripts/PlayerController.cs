@@ -11,14 +11,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController characterCont;
 
     private bool isAttacking;
-    private bool isHit;
+    private bool isDead;
 
     void Start()
     {
         maxSpeed = 5f;
         gravity = -9.8f;
         isAttacking = false;
-        isHit = false;
+        isDead = false;
     }
 
     void Update()
@@ -72,19 +72,16 @@ public class PlayerController : MonoBehaviour
         animations.SetBool("isAttacking", isAttacking);
     }
 
-    void PlayerHit(Collision collision)
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         //need to get collision between minotaur and player, if the minotaur is charging then set isHit to true, otherwise its false.
         //Player will not get up when they are hit.
-        if(collision.gameObject.tag == "minotaur")
+        if (hit.gameObject.tag == "minotaur")
         {
-            isHit = true;
-            animations.SetBool("isHit", isHit);
-            isHit = false;
-        } else
-        {
-            isHit = false;
-            return;
+            animations.SetTrigger("isHit");
+            characterCont = null;
+            isDead = true;
         }
+        
     }
 }
