@@ -11,6 +11,8 @@ public class Camera_Controller : MonoBehaviour
         RotMouseY = 2
     }
 
+    public PlayerController player;
+
     public RotationAxis axis = RotationAxis.RotMouseX;
 
     //maximum and minimum vertical angles the player can look
@@ -20,14 +22,14 @@ public class Camera_Controller : MonoBehaviour
     //set the camera sensitivity
     [SerializeField] private float sensitivityH;
     [SerializeField] private float sensitivityV;
-    PlayerController player;
+    //PlayerController player;
     public float rotationX = 0;
 
     void Start()
     {
         minimumV = -65f;
         maximumV = 65f;
-        player = GetComponent<PlayerController>();
+        //player = GetComponent<PlayerController>();
 
         //lock mouse cursor and make it invisible
         Cursor.lockState = CursorLockMode.Locked;
@@ -42,19 +44,27 @@ public class Camera_Controller : MonoBehaviour
     {
         //rotate horizontally   
         //Debug.Log(player.isDead);
-        if (axis == RotationAxis.RotMouseX)
+        if (1==1)//player != null)
         {
-            transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityH, 0);
-        }
-        else if (axis == RotationAxis.RotMouseY)
-        {
-            rotationX -= Input.GetAxis("Mouse Y") * sensitivityV;
-            //clamps the rotations to the set values
-            rotationX = Mathf.Clamp(rotationX, minimumV, maximumV);
+            if (!player.isDead)
+            {
+                if (axis == RotationAxis.RotMouseX)
+                {
+                    transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityH, 0);
+                }
+                else if (axis == RotationAxis.RotMouseY)
+                {
+                    rotationX -= Input.GetAxis("Mouse Y") * sensitivityV;
+                    //clamps the rotations to the set values
+                    rotationX = Mathf.Clamp(rotationX, minimumV, maximumV);
 
-            //rotate vertically
-            float rotationY = transform.localEulerAngles.y;
-            transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
+                    //rotate vertically
+                    float rotationY = transform.localEulerAngles.y;
+                    transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
+                }
+            }
         }
+
+
     }
 }

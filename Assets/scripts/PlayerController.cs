@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController characterCont;
 
     private bool isAttacking;
-    public bool isDead;
+    public bool isDead = false;
 
     Camera_Controller cameraCont;
 
