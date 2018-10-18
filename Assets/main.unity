@@ -128,9 +128,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 1.75
+  m_Height: 3
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: -0.45}
+  m_Center: {x: 0, y: 0, z: -1}
 --- !u!4 &192109640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400088, guid: 84a59658a02ecc44dbdac2a959559621,
@@ -437,6 +437,7 @@ MonoBehaviour:
   player: {fileID: 1658742283}
   beingHit: 0
   turning: 0
+  turncount: 0
 --- !u!143 &578320029
 CharacterController:
   m_ObjectHideFlags: 0
@@ -502,6 +503,10 @@ Prefab:
     - target: {fileID: 400000, guid: dd0682cd55d7f8342b8026ebb1cfc4a5, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: dd0682cd55d7f8342b8026ebb1cfc4a5, type: 3}
+      propertyPath: m_TagString
+      value: pickup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd0682cd55d7f8342b8026ebb1cfc4a5, type: 3}
@@ -645,7 +650,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.01
+      value: -6.8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
       propertyPath: m_LocalPosition.y
@@ -653,7 +658,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20.66
+      value: -20.7
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
       propertyPath: m_LocalRotation.x
@@ -698,6 +703,14 @@ Prefab:
     - target: {fileID: 100000, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -31.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84a59658a02ecc44dbdac2a959559621, type: 3}
@@ -1182,7 +1195,7 @@ Transform:
   - {fileID: 1675887182}
   - {fileID: 1946133128}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1658742282 stripped
 GameObject:
@@ -1205,8 +1218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a66a505a8ca1f124594023b841c7f196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sword: {fileID: 66048069}
   animations: {fileID: 1658742288}
   characterCont: {fileID: 1658742287}
+  isDead: 0
 --- !u!114 &1658742285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,19 +1237,6 @@ MonoBehaviour:
   sensitivityH: 10
   sensitivityV: 10
   rotationX: 0
---- !u!136 &1658742286
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1658742282}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!143 &1658742287
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1246,7 +1248,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
-  m_Radius: 0.25
+  m_Radius: 0.65
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1380,7 +1382,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinSpeed: 50
-  sword: {fileID: 66048069}
 --- !u!136 &1709258326
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1388,7 +1389,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1709258323}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.4
   m_Height: 1.5
@@ -1669,7 +1670,7 @@ Transform:
   m_LocalScale: {x: 6, y: 1, z: 6}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1946133127
 GameObject:

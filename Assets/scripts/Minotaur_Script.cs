@@ -111,7 +111,12 @@ public class Minotaur_Script : MonoBehaviour {
         }
         Vector3 vel = transform.forward * speed;
         vel.y = gravity;
-        if(turning)
+        if (beingHit)
+        {
+            vel *= -2;
+            vel.y = -9.8f;
+        }
+        else if (turning)
         {
             vel.x = 0;
             vel.z = 0;
@@ -124,7 +129,9 @@ public class Minotaur_Script : MonoBehaviour {
     {
         if(other.gameObject.tag == "Weapon")
         {
+
             animations.SetTrigger("HitTrigger");
+            beingHit = true;
         }
         
     }
