@@ -13,24 +13,3 @@
 <script src="3d.js"></script>
 <script src="web.js"></script>
 
-<script>
-    var aniText = (x, ele, delay) => {
-        ele.innerText = "";
-        var z = 1;
-        x.split("").forEach((y) => {
-            setTimeout(() => {
-                if (y != " ") {
-                    ele.innerText += y
-                } else {
-                    ele.innerText += "\u00A0";
-                }
-
-            }, delay * z++)
-        })
-    }
-    var aniTextDurration = (x, ele, durration) => {
-        var delay = durration / x.length;
-        aniText(x, ele, delay);
-    }
-    
-</script>
