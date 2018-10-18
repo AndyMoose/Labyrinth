@@ -4,8 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Weapon
   - Wall
+=======
+  - minotaur
+>>>>>>> austin
   layers:
   - Default
   - TransparentFX
