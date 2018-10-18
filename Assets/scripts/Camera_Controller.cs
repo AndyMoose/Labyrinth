@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera_Controller : MonoBehaviour {
-    
+public class Camera_Controller : MonoBehaviour
+{
+
     public enum RotationAxis
     {
-        RotMouseX = 1, 
+        RotMouseX = 1,
         RotMouseY = 2
     }
 
@@ -19,13 +20,14 @@ public class Camera_Controller : MonoBehaviour {
     //set the camera sensitivity
     [SerializeField] private float sensitivityH;
     [SerializeField] private float sensitivityV;
-
+    PlayerController player;
     public float rotationX = 0;
 
-    private void Start()
+    void Start()
     {
         minimumV = -65f;
         maximumV = 65f;
+        player = GetComponent<PlayerController>();
 
         //lock mouse cursor and make it invisible
         Cursor.lockState = CursorLockMode.Locked;
@@ -36,13 +38,14 @@ public class Camera_Controller : MonoBehaviour {
             Cursor.visible = true;
         }
     }
-    void Update() {
-
-        //rotate horizontally
+    void Update()
+    {
+        //rotate horizontally   
+        //Debug.Log(player.isDead);
         if (axis == RotationAxis.RotMouseX)
         {
             transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityH, 0);
-        }       
+        }
         else if (axis == RotationAxis.RotMouseY)
         {
             rotationX -= Input.GetAxis("Mouse Y") * sensitivityV;
@@ -51,7 +54,8 @@ public class Camera_Controller : MonoBehaviour {
 
             //rotate vertically
             float rotationY = transform.localEulerAngles.y;
+            Debug.Log(rotationY);
             transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
         }
-	}
+    }
 }
