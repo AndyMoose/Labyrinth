@@ -17,9 +17,10 @@ public class leftturning : StateMachineBehaviour {
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.gameObject.GetComponent<Minotaur_Script>().turning = false;
         animator.gameObject.transform.Rotate(0, -90, 0);
-        animator.gameObject.transform.localPosition += animator.gameObject.transform.forward * -.75f;
+        animator.gameObject.GetComponent<Minotaur_Script>().turncount = true;
+        animator.gameObject.GetComponent<Minotaur_Script>().turning = false;
+        // animator.gameObject.transform.localPosition += animator.gameObject.transform.forward * -.75f;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
