@@ -7,9 +7,15 @@ const ncolor = "#2196F3"
 const scolorClass = "w3-red";
 
 var map = [];
+var tableG;
 
 function createTable() {
+    var dvp = document.getElementById("main");
     var tbl = document.createElement("table")
+    tableG = tbl;
+    //ondrop="dropHandler(event);"
+    //dvp.addEventListener("drop", dropHandler);
+    //dvp.addEventListener("drag", dragOverHandler);
     tbl.style.backgroundColor = ncolor;
     tbl.style.width = "100%";
     tbl.style.height = window.innerHeight + "px";
@@ -29,7 +35,9 @@ function createTable() {
         }
         tbl.appendChild(rw);
     }
-    document.body.appendChild(tbl);
+    //ondrop="dropHandler(event);
+    dvp.appendChild(tbl);
+    document.body.appendChild(dvp);
 }
 
 function addPlacement(div) {
@@ -105,6 +113,82 @@ function addPlacement(div) {
     return div;
 }
 
+function dropHandler(ev) {
+    console.log('File(s) dropped');
 
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+    var reader = new FileReader();
+
+    if (ev.dataTransfer.items) {
+        // Use DataTransferItemList interface to access the file(s)
+        for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+            // If dropped items aren't files, reject them
+            if (ev.dataTransfer.items[i].kind === 'file') {
+                var file = ev.dataTransfer.items[i].getAsFile();
+                console.log('... file[' + i + '].name = ' + file.name);
+
+                reader.onload = function (e) {
+                    var text = reader.result;
+                    map = JSON.parse(text);
+                    loadmap();
+                }
+                reader.readAsText(file);
+
+            }
+        }
+    } else {
+        // Use DataTransfer interface to access the file(s)
+        for (var i = 0; i < ev.dataTransfer.files.length; i++) {
+            console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
+
+        }
+        reader.onload = function (e) {
+            var text = reader.result;
+            map = JSON.parse(text);
+            loadmap();
+        }
+        reader.readAsText(ev.dataTransfer.files[0]);
+    }
+
+    // Pass event to removeDragData for cleanup
+    removeDragData(ev)
+}
+
+function dragOverHandler(ev) {
+    console.log('File(s) in drop zone');
+
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+}
+function removeDragData(ev) {
+    console.log('Removing drag data');
+
+    if (ev.dataTransfer.items) {
+        // Use DataTransferItemList interface to remove the drag data
+        ev.dataTransfer.items.clear();
+    } else {
+        // Use DataTransfer interface to remove the drag data
+        ev.dataTransfer.clearData();
+    }
+}
+
+function loadmap() {
+    var mapping = [2, 0, 1, 3] //[1,2,0,3];
+    for (var i = 0; i < y; i++) {
+        for (var j = 0; j < x; j++) {
+            for (var z = 0; z < 4; z++) {
+                if (map[j][i][z] === 1) {
+                    //1,2,0,3
+                    //console.log(tableG.children[i].children[j].children[0].children[mapping[z]])
+                    //tableG.children[i].children[j].children[0].children[mapping[z]].click();
+                    tableG.children[i].children[j].children[0].children[mapping[z]].className += " " + scolorClass
+                } else {
+                    tableG.children[i].children[j].children[0].children[mapping[z]].className = tableG.children[i].children[j].children[0].children[mapping[z]].className.split(" " + scolorClass).join("");
+                }
+            }
+        }
+    }
+}
 
 createTable();

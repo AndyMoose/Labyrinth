@@ -1,8 +1,9 @@
 var verts = -1; //-1 offset built in
 const scale = 5;
 var movement = [];
-function createModel(file) {
+function createModel() {
     verts = -1;
+    file = "file.dae"
     clearMovement();
 
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
