@@ -7,8 +7,8 @@ function createModel() {
     clearMovement();
 
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 ,side: THREE.DoubleSided});
-    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 ,side: THREE.DoubleSided});
+    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00, side: THREE.DoubleSided });
+    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSided });
 
 
     geometry = createWalls(geometry);
@@ -65,6 +65,10 @@ function createWalls(geometry) {
     return geometry;
 }
 function createWall(x, y, side, geometry) {
+
+    var gl = [new THREE.Geometry(), new THREE.Geometry()];
+    var fg = new THREE.Geometry();
+
     var posx = x * tileSize;
     var posz = y * tileSize; //0 top, 3 bottom, 1 left, 2 right
 
@@ -118,9 +122,20 @@ function createWall(x, y, side, geometry) {
 
     gv.forEach((v) => { geometry.vertices.push(arrayToV3(v)) });
 
+    [0, 1, 2].forEach((x) => { gl[0].vertices.push(arrayToV3(verts[x])) })
+    [1, 2, 3].forEach((x) => { gl[1].vertices.push(arrayToV3(verts[x])) })
+
     var normal = new THREE.Vector3(0, 1, 0); //optional
     var color = new THREE.Color(0xffaa00); //optional
     var materialIndex = 1; //optional
+
+    var f1 = new THREE.Face3(0, 1, 2, normal, color, materialIndex);
+    var f2 = new THREE.Face3(0, 1, 2, normal, color, materialIndex);
+
+    gl[0].faces.push(f1);
+    gl[1].faces.push(f2);
+    gl.forEach((g)=>{g.computeBoundingBox()});
+    fg.merge(gl[0], gl[1]);
     //console.log(geometry.vertices);
     //console.log(verts);
     //console.log(geometry.vertices.length);
@@ -134,7 +149,7 @@ function createWall(x, y, side, geometry) {
 
     geometry.computeBoundingBox();
 
-    return geometry;
+    return fg;
 }
 
 function arrayToV3(arr) {
