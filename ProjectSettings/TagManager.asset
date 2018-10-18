@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - minotaur
+=======
+  - Weapon
+  - Wall
+>>>>>>> andy
   layers:
   - Default
   - TransparentFX
