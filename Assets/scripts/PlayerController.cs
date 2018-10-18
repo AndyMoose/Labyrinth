@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public GameObject sword;
     private float maxSpeed;
     private float gravity;
     [SerializeField] private Animator animations;
@@ -90,6 +90,16 @@ public class PlayerController : MonoBehaviour
             animations.SetTrigger("isHit");
             isDead = true;
         }
-        
+
     }
+    private void OnTriggerEnter(Collider other)
+    {
+         //deletes sword on collision with player
+        if (other.gameObject.tag == "pickup")
+        {
+            sword.SetActive(true);
+            Destroy(other.gameObject);
+        }
+    }
+
 }
