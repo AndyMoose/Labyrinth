@@ -21,6 +21,8 @@ public class Minotaur_Script : MonoBehaviour {
     //variables for "sight"
     private float maxDistance;
     private float arc;
+    public bool turncount;
+    private bool turnCountdown;
 
     // Use this for initialization
     void Start()
@@ -33,12 +35,33 @@ public class Minotaur_Script : MonoBehaviour {
         speed = 0;
         gravity = -9.8f;
         maxDistance = 50f;
-        arc = 4f;
+        arc = 6f;
+        turncount = false;
+        turnCountdown = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(turncount)
+        {
+            StartCoroutine(Countdown());
+            turncount = false;
+        }
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,transform.forward, out hit) && turnCountdown)
+        { 
+            if(hit.transform.tag == "Wall")
+            {
+                if(hit.distance < 4.5f)
+                { 
+                    animations.SetTrigger("LeftTurn");
+                    turning = true;
+                    turnCountdown = false;
+                    running = false;
+                }
+            }
+        }
         //runs towards player if player is within distance and within a certain angle
         if (Vector3.Distance(transform.position, player.position) < maxDistance)
         {
@@ -82,12 +105,17 @@ public class Minotaur_Script : MonoBehaviour {
 
             //changes speed based on running or walking
             if (!running)
-                speed = .015f;
+                speed = .03f;
             else
                 speed = .2f;
         }
         Vector3 vel = transform.forward * speed;
         vel.y = gravity;
+        if(turning)
+        {
+            vel.x = 0;
+            vel.z = 0;
+        }
         cc.Move(vel);
     }
 
@@ -101,7 +129,13 @@ public class Minotaur_Script : MonoBehaviour {
         
     }
 
+    IEnumerator Countdown()
+    {
+        yield return new WaitForSeconds(1);
+        turnCountdown = true;
+    }
     //checks for collsion with wall and plays animation if so
+    /*
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.tag == "Wall")
@@ -109,4 +143,5 @@ public class Minotaur_Script : MonoBehaviour {
             animations.SetTrigger("LeftTurn");
         }
     }
+    */
 }
