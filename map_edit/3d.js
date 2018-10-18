@@ -7,9 +7,11 @@ function createModel() {
     clearMovement();
 
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 ,side: THREE.DoubleSided});
-    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 ,side: THREE.DoubleSided});
-    
+    var texture = new THREE.TextureLoader().load('textures/floor_small.jpg');
+
+    var material = new THREE.MeshBasicMaterial({ map: texture });
+    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSided });
+
 
 
     geometry = createWalls(geometry);
@@ -20,6 +22,10 @@ function createModel() {
 
     exporter.parse(cube, function (result) {
 
+        
+
+
+
         //saveString(result.data, 'scene.dae');
         //download(file, result.data);
         //download(file + ".txt", JSON.stringify(map));
@@ -29,6 +35,8 @@ function createModel() {
         zip.file(file, result.data);
         zip.file(file + ".txt", JSON.stringify(map));
         zip.file(file + "_movment.txt", JSON.stringify(map));
+        //var tex = zip.folder("textures");
+        //tex.file("floor_small.jpg", getBase64Image(imgz), { base64: true });
 
         zip.generateAsync({ type: "blob" })
             .then(function (content) {
@@ -36,6 +44,7 @@ function createModel() {
                 //download("map.zip", content);
                 saveAs(content, "map.zip");
             });
+
     });
 }
 
@@ -190,3 +199,13 @@ function download(filename, text) {
 
     document.body.removeChild(element);
 }
+
+/*function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}*/
