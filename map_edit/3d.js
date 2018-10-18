@@ -1,28 +1,33 @@
 var verts = -1; //-1 offset built in
 const scale = 5;
+var scene
 var movement = [];
 function createModel() {
     verts = -1;
     file = "file.dae"
     clearMovement();
+    scene = new THREE.Scene();
+    var geometryFloor = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
+    var geometry = new THREE.Geometry();
+    // /var texture = new THREE.TextureLoader().load('textures/floor_small.jpg');
 
-    var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
-    var texture = new THREE.TextureLoader().load('textures/floor_small.jpg');
-
-    var material = new THREE.MeshBasicMaterial({ map: texture });
-    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSided });
+    var material = new THREE.MeshBasicMaterial({ color: 0xff00ff });
+    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
 
 
 
     geometry = createWalls(geometry);
-
+    var floor = new THREE.Mesh(geometryFloor, [material, material2]);
     var cube = new THREE.Mesh(geometry, [material, material2]);
+
+    scene.add(floor);
+    scene.add(cube);
 
     var exporter = new THREE.ColladaExporter();
 
-    exporter.parse(cube, function (result) {
+    exporter.parse(scene, function (result) {
 
-        
+
 
 
 
@@ -35,6 +40,7 @@ function createModel() {
         zip.file(file, result.data);
         zip.file(file + ".txt", JSON.stringify(map));
         zip.file(file + "_movment.txt", JSON.stringify(map));
+        zip.file(file + ".obj", exportToObj(scene));
         //var tex = zip.folder("textures");
         //tex.file("floor_small.jpg", getBase64Image(imgz), { base64: true });
 
@@ -77,6 +83,11 @@ function createWalls(geometry) {
 function createWall(x, y, side, geometry) {
     var posx = x * tileSize;
     var posz = y * tileSize; //0 top, 3 bottom, 1 left, 2 right
+
+    //lights
+    //var light = new THREE.PointLight(0xff0000, 1, 100);
+    //light.position.set(posx, 5, posz);
+    //scene.add(light);
 
     var sx = scale * x;
     var sy = scale * y;
@@ -152,7 +163,7 @@ function createWall(x, y, side, geometry) {
 }
 
 function arrayToV3(arr) {
-    console.log(arr);
+    //console.log(arr);
     return new THREE.Vector3(arr[0], arr[1], arr[2]);
 }
 
@@ -167,7 +178,7 @@ function createFloorGeometry() {
         new THREE.Vector3(1 * x * tileSize, 0, -0 * y * tileSize),
         new THREE.Vector3(1 * x * tileSize, 0, 1 * y * tileSize)
     );
-    verts += 4;
+    //verts += 4;
 
     var normal = new THREE.Vector3(0, 1, 0); //optional
     var color = new THREE.Color(0xffaa00); //optional
@@ -209,3 +220,25 @@ function download(filename, text) {
     var dataURL = canvas.toDataURL("image/png");
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 }*/
+
+function exportToObj(obj) {
+
+    var exporter = new THREE.OBJExporter();
+    var result = exporter.parse(obj);
+    return result;
+
+}
+
+function randomMap() {
+    for (var i = 0; i < y; i++) {
+        for (var j = 0; j < x; j++) {
+            for (var z = 0; z < 4; z++) {
+                if (Math.random() > .5) {
+                    map[j][i][z] = 1;
+                }
+            }
+
+        }
+    }
+    loadmap();
+}
