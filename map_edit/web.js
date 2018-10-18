@@ -191,8 +191,7 @@ function loadmap() {
     }
 }
 
+
+
 createTable();
-/*var imgz = document.createElement("img")
-imgz.src = "textures/floor_small.jpg"
-imgz.style.display = "none";
-document.body.appendChild(imgz);*/
+

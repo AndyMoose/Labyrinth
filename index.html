@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="w3.css">
+<style>
+    html,
+    body {
+        margin: 0px;
+        padding: 0px;
+        background-color: black;
+    }
+</style>
+
+<div class="">
+    <div id="intro" class="w3-content w3-justify w3-text-grey w3-padding-64">
+        <h2 class="w3-text-light-grey" id="lbr">Labyrinth</h2>
+        <hr style="width:200px" class="w3-opacity">
+
+        <h6 class="w3-text-light-grey" id="names">Landon McGee, Alex Cipriano, <br> Austin Dean, and Andy Moose</h6>
+    </div>
+</div>
+<div class="w3-half">
+    <p></p>
+</div>
+<div class="w3-half">
+    <h2 class="w3-text-light-grey intro2" id="tools">Tools</h2>
+    <hr style="width:200px" class="w3-opacity intro2">
+    <div style="margin-right: 32px" class="tool1 w3-dark-grey w3-card-4 w3-round-large w3-padding-large w3-hover-gray w3-center">
+        <h2 id="mapedit">Map Editor</h2>
+    </div>
+</div>
+
+<script>
+    document.getElementById("mapedit").onclick = function () {
+        var s = "";
+        window.location += s + "map_edit/index.html"
+    };
+</script>
+<script src="anime.min.js"></script>
+<script>
+    var delay = 1500;
+    var basicTimeline = anime.timeline();
+    basicTimeline
+        .add({
+            targets: '#intro',
+            opacity: [0, 1],
+            duration: delay,
+            easing: 'linear'
+        })
+        .add({
+            targets: '.intro2',
+            opacity: [0, 1],
+            duration: delay,
+            easing: 'linear'
+        })
+        .add({
+            targets: '.tool1',
+            opacity: [0, 1],
+            duration: delay,
+            easing: 'linear'
+        });
+
+
+</script>
+
+<script>
+    var aniText = (x, ele, delay) => {
+        ele.innerText = "";
+        var z = 1;
+        x.split("").forEach((y) => {
+            setTimeout(() => {
+                if (y != " ") {
+                    ele.innerText += y
+                } else {
+                    ele.innerText += "\u00A0";
+                }
+
+            }, delay * z++)
+        })
+    }
+    var aniTextDurration = (x, ele, durration) => {
+        var delay = durration / x.length;
+        aniText(x, ele, delay);
+    }
+
+    aniTextDurration("Labyrinth", document.getElementById("lbr"), delay);
+    aniTextDurration("Landon McGee, Alex Cipriano,\nAustin Dean, and Andy Moose", document.getElementById("names"), delay);
+    aniTextDurration("Tools", document.getElementById("Tools"), delay);
+</script>
