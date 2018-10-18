@@ -191,4 +191,5 @@ function loadmap() {
     }
 }
 
+
 createTable();

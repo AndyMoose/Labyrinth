@@ -10,10 +10,10 @@
 
 <div class="">
     <div id="intro" class="w3-content w3-justify w3-text-grey w3-padding-64">
-        <h2 class="w3-text-light-grey">Labyrinth</h2>
+        <h2 class="w3-text-light-grey" id="lbr">Labyrinth</h2>
         <hr style="width:200px" class="w3-opacity">
 
-        <h6 class="w3-text-light-grey">Landon McGee, Alex Cipriano, <br> Austin Dean, and Andy Moose</h6>
+        <h6 class="w3-text-light-grey" id="names">Landon McGee, Alex Cipriano, <br> Austin Dean, and Andy Moose</h6>
     </div>
 </div>
 <div class="w3-half">
@@ -58,4 +58,29 @@
         });
 
 
+</script>
+
+<script>
+    var aniText = (x, ele, delay) => {
+        ele.innerText = "";
+        var z = 1;
+        x.split("").forEach((y) => {
+            setTimeout(() => {
+                if (y != " ") {
+                    ele.innerText += y
+                } else {
+                    ele.innerText += "\u00A0";
+                }
+
+            }, delay * z++)
+        })
+    }
+    var aniTextDurration = (x, ele, durration) => {
+        var delay = durration / x.length;
+        aniText(x, ele, delay);
+    }
+
+    aniTextDurration("Labyrinth", document.getElementById("lbr"), delay);
+    aniTextDurration("Landon McGee, Alex Cipriano,\nAustin Dean, and Andy Moose", document.getElementById("names"), delay);
+    
 </script>
