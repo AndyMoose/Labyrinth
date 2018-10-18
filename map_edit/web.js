@@ -174,7 +174,7 @@ function removeDragData(ev) {
 }
 
 function loadmap() {
-    var mapping = [1, 2, 0, 3] //[1,2,0,3];
+    var mapping = [2, 0, 1, 3] //[1,2,0,3];
     for (var i = 0; i < y; i++) {
         for (var j = 0; j < x; j++) {
             for (var z = 0; z < 4; z++) {
@@ -183,6 +183,8 @@ function loadmap() {
                     //console.log(tableG.children[i].children[j].children[0].children[mapping[z]])
                     //tableG.children[i].children[j].children[0].children[mapping[z]].click();
                     tableG.children[i].children[j].children[0].children[mapping[z]].className += " " + scolorClass
+                } else {
+                    tableG.children[i].children[j].children[0].children[mapping[z]].className = tableG.children[i].children[j].children[0].children[mapping[z]].className.split(" " + scolorClass).join("");
                 }
             }
         }
