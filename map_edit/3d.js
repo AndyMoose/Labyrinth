@@ -7,8 +7,8 @@ function createModel() {
     clearMovement();
 
     var geometry = createFloorGeometry() //new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 ,side: THREE.DoubleSided});
+    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 ,side: THREE.DoubleSided});
 
 
     geometry = createWalls(geometry);
