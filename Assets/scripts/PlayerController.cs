@@ -13,11 +13,8 @@ public class PlayerController : MonoBehaviour
     private bool isAttacking;
     public bool isDead;
 
-    Camera_Controller cameraCont;
-
     void Start()
-    {
-        cameraCont = GetComponent<Camera_Controller>();       
+    {    
         maxSpeed = 5f;
         gravity = -9.8f;
         isAttacking = false;
