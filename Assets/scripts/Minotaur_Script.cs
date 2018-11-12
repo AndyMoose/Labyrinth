@@ -9,7 +9,7 @@ public class Minotaur_Script : MonoBehaviour {
     public Transform player;
     
     //used for blending running and walking
-    private float t;
+    public float t;
     //variables for animations
     public bool beingHit;
     private bool running;
@@ -92,7 +92,12 @@ public class Minotaur_Script : MonoBehaviour {
             AnimatorStateInfo stateInfo = animations.GetCurrentAnimatorStateInfo(0);
 
             //sets "blend" variable in blend tree depending on if minotaur is walking or running
-            if (running && t <= 2)
+            if(t < 1)
+            {
+                animations.SetFloat("Blend", t);
+                t += .05f;
+            }
+            else if (running && t <= 2)
             {
                 animations.SetFloat("Blend", t);
                 t += .02f;
