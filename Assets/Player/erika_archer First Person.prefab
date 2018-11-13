@@ -725,7 +725,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1695848223963886
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -1355,8 +1355,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.0000000064931753, y: 0.17815155, z: 0.025849847}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4573650757226452}
+  m_Children: []
   m_Father: {fileID: 4954032869096340}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1779,12 +1778,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1695848223963886}
-  m_LocalRotation: {x: -0, y: -3.523657e-19, z: -2.7105054e-20, w: 1}
-  m_LocalPosition: {x: 0, y: 0.032848626, z: 0.11515044}
+  m_LocalRotation: {x: -5.2042763e-18, y: -0, z: -1.2112781e-23, w: 1}
+  m_LocalPosition: {x: 0, y: 1.8098047, z: 0.12580395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4159087095781712}
-  m_RootOrder: 0
+  m_Father: {fileID: 4768915410646394}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4593813844171406
 Transform:
@@ -1997,11 +1996,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1034266146698500}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.041379, y: 1, z: 15.149634}
+  m_LocalPosition: {x: -37.16, y: 1, z: -11.743685}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4440684696561898}
   - {fileID: 4937161777861134}
+  - {fileID: 4573650757226452}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2214,7 +2214,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -2262,6 +2262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axis: 1
   player: {fileID: 114705037419265888}
+  anim: {fileID: 95188026118656074}
+  FPScam: {fileID: 20612278931674994}
   sensitivityH: 10
   sensitivityV: 10
   rotationX: 0
@@ -2278,6 +2280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axis: 2
   player: {fileID: 114705037419265888}
+  anim: {fileID: 95188026118656074}
+  FPScam: {fileID: 20612278931674994}
   sensitivityH: 10
   sensitivityV: 10
   rotationX: 0

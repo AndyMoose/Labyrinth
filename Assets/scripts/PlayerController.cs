@@ -66,9 +66,12 @@ public class PlayerController : MonoBehaviour
         //gets left mouse button 
         if (!isDead)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttacking)
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                isAttacking = true;
+                if (isAttacking == false)
+                {
+                    isAttacking = true;
+                }
             }
             else
             {
@@ -84,8 +87,12 @@ public class PlayerController : MonoBehaviour
         //Player will not get up when they are hit.
         if (hit.gameObject.tag == "minotaur")
         {
-            animations.SetTrigger("isHit");
-            isDead = true;
+            if (isDead == false)
+            {
+                animations.SetTrigger("isHit");
+                characterCont.enabled = false;
+                isDead = true;
+            }
         }
 
     }

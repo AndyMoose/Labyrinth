@@ -32,7 +32,7 @@ public class Camera_Controller : MonoBehaviour
         minimumV = -40f;
         maximumV = 40f;
 
-        FPScam.transform.position = player.transform.position;
+        cameraPos = anim.GetBoneTransform(HumanBodyBones.Head).position;
         //lock mouse cursor and make it invisible
         Cursor.lockState = CursorLockMode.Locked;
         //unlock mouse cursor when escape is pressed
@@ -61,7 +61,13 @@ public class Camera_Controller : MonoBehaviour
                 float rotationY = transform.localEulerAngles.y;
                 transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
             }
-
+            //sets the camera position to slightly above and ahead from the players head.
+            cameraPos = anim.GetBoneTransform(HumanBodyBones.Head).position;
+            cameraOffset = player.transform.forward / 10f;
+            cameraOffset.y = .25f;
+            FPScam.transform.position = cameraPos + cameraOffset;
+        } else
+        {
             cameraPos = anim.GetBoneTransform(HumanBodyBones.Head).position;
             cameraOffset = player.transform.forward / 10f;
             cameraOffset.y = .25f;

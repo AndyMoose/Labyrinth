@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 65258784820584430}
   - component: {fileID: 23867733924837412}
   m_Layer: 0
-  m_Name: CornerSquare w_2entrances
+  m_Name: CornerSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
