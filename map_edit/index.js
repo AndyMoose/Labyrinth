@@ -13,7 +13,7 @@ var server = http.createServer(function (req, res) {
             return "";
         });
         
-    } else if (req.url.endsWith(".css") || req.url.endsWith(".js") || req.url.endsWith(".png") || req.url.endsWith(".webm") || req.url.endsWith(".jpg")) {
+    } else if (req.url.endsWith(".css") || req.url.endsWith(".js") || req.url.endsWith(".png") || req.url.endsWith(".webm") || req.url.endsWith(".jpg") || req.url.endsWith(".html")) {
         var filePath = '.' + req.url;
         if (filePath == './')
             filePath = './home.html';
