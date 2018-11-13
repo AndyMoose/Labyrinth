@@ -2,6 +2,7 @@ var verts = -1; //-1 offset built in
 const scale = 5;
 var scene
 var movement = [];
+var walls = [];
 function createModel() {
     verts = -1;
     file = "file.dae"
@@ -18,10 +19,13 @@ function createModel() {
 
     geometry = createWalls(geometry);
     var floor = new THREE.Mesh(geometryFloor, [material, material2]);
-    var cube = new THREE.Mesh(geometry, [material, material2]);
+    //var cube = new THREE.Mesh(geometry, [material, material2]);
+    walls.forEach((wall) => {
+        scene.add(new THREE.Mesh(wall, [material, material2]));
+    })
 
     scene.add(floor);
-    scene.add(cube);
+    //scene.add(cube);
 
     var exporter = new THREE.ColladaExporter();
 
@@ -105,11 +109,19 @@ function createWall(x, y, side, geometry) {
 
         if (side == 3) {
             vertsz.forEach((v) => { v[2] += tileSize })
+
+            geometry = new THREE.BoxGeometry(tileSize, tileSize, wallSize);
+            geometry.position = new THREE.Vector3(posx, 0, posz + tileSize);
+
             for (var z = 0; z < scale; z++) {
                 movement[sx + z][sy + scale - 1] = 1;
             }
 
         } else {
+
+            geometry = new THREE.BoxGeometry(tileSize, tileSize, wallSize);
+            geometry.position = new THREE.Vector3(posx, 0, posz);
+
             for (var z = 0; z < scale; z++) {
                 movement[sx + z][sy] = 1;
             }
@@ -125,11 +137,19 @@ function createWall(x, y, side, geometry) {
         ];
         if (side == 2) {
             vertsz.forEach((v) => { v[0] += tileSize })
+
+            geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize);
+            geometry.position = new THREE.Vector3(posx, 0, posz + tileSize);
+
             for (var z = 0; z < scale; z++) {
                 movement[sx + scale - 1][sy + z] = 1;
             }
 
         } else {
+
+            geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize);
+            geometry.position = new THREE.Vector3(posx, 0, posz);
+
             for (var z = 0; z < scale; z++) {
                 movement[sx + scale - 1][sy + z] = 1;
             }
@@ -137,28 +157,9 @@ function createWall(x, y, side, geometry) {
         gv = vertsz;
     }
 
-    gv.forEach((v) => { geometry.vertices.push(arrayToV3(v)) });
-
-    var normal = new THREE.Vector3(0, 1, 0); //optional
-    var color = new THREE.Color(0xffaa00); //optional
     var materialIndex = 1; //optional
-    //console.log(geometry.vertices);
-    //console.log(verts);
-    //console.log(geometry.vertices.length);
-    var face = new THREE.Face3(verts + 1, verts + 2, verts + 3, normal, color, materialIndex);
-    var face2 = new THREE.Face3(verts + 2, verts + 3, verts + 4, normal, color, materialIndex);
-    var face3 = new THREE.Face3(verts + 3, verts + 2, verts + 1, normal, color, materialIndex);
-    var face4 = new THREE.Face3(verts + 4, verts + 3, verts + 2, normal, color, materialIndex);
 
-    verts += 4;
-
-    geometry.faces.push(face);
-    geometry.faces.push(face2);
-    geometry.faces.push(face3);
-    geometry.faces.push(face4);
-
-    geometry.computeBoundingBox();
-
+    walls.push(geometry);
     return geometry;
 }
 
@@ -168,33 +169,17 @@ function arrayToV3(arr) {
 }
 
 function createFloorGeometry() {
-    var geometry = new THREE.Geometry();
 
-    geometry.vertices.push(
-        //center at 0,0 rather than edge prob need to change it
-        // (or change createwall to place in -x/z)
-        new THREE.Vector3(-0 * x * tileSize, 0, -0 * y * tileSize), //x, y, z
+    //center at 0,0 rather than edge prob need to change it
+    // (or change createwall to place in -x/z)
+    new THREE.Vector3(-0 * x * tileSize, 0, -0 * y * tileSize), //x, y, z
         new THREE.Vector3(-0 * x * tileSize, 0, 1 * y * tileSize),
         new THREE.Vector3(1 * x * tileSize, 0, -0 * y * tileSize),
         new THREE.Vector3(1 * x * tileSize, 0, 1 * y * tileSize)
-    );
-    //verts += 4;
 
-    var normal = new THREE.Vector3(0, 1, 0); //optional
-    var color = new THREE.Color(0xffaa00); //optional
-    var materialIndex = 0; //optional
-    var face = new THREE.Face3(0, 1, 2, normal, color, materialIndex);
-    var face2 = new THREE.Face3(1, 2, 3, normal, color, materialIndex);
+    var geometry = new THREE.BoxGeometry(x * tileSize, 0, y * tileSize);
+    geometry.position = new THREE.Vector3(0, 0, 0);
 
-    var face3 = new THREE.Face3(2, 1, 0, normal, color, materialIndex);
-    var face4 = new THREE.Face3(3, 2, 1, normal, color, materialIndex);
-
-    geometry.faces.push(face);
-    geometry.faces.push(face2);
-    geometry.faces.push(face3);
-    geometry.faces.push(face4);
-
-    geometry.computeBoundingBox();
     return geometry;
 }
 
