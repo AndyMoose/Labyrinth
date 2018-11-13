@@ -12,19 +12,25 @@ function createModel() {
     var geometry = new THREE.Geometry();
     // /var texture = new THREE.TextureLoader().load('textures/floor_small.jpg');
 
-    var material = new THREE.MeshBasicMaterial({ color: 0xff00ff });
-    var material2 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    var material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+    var material2 = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
 
 
-
+    walls = [];
     geometry = createWalls(geometry);
     var floor = new THREE.Mesh(geometryFloor, [material, material2]);
     //var cube = new THREE.Mesh(geometry, [material, material2]);
     walls.forEach((wall) => {
-        scene.add(new THREE.Mesh(wall, [material, material2]));
+        wall.faces.forEach((face)=>{
+            face.materialIndex = 2;
+        });
+        var msh = new THREE.Mesh(wall, [material, material2])
+        msh.position.set(wall.position.x, wall.position.y + 3, wall.position.z)
+        scene.add(msh);
     })
-
+    //floor.position.set(wallSize * x / 2, 0, wallSize * y / 2);
     scene.add(floor);
+    console.log({ scene })
     //scene.add(cube);
 
     var exporter = new THREE.ColladaExporter();
@@ -111,7 +117,7 @@ function createWall(x, y, side, geometry) {
             vertsz.forEach((v) => { v[2] += tileSize })
 
             geometry = new THREE.BoxGeometry(tileSize, tileSize, wallSize);
-            geometry.position = new THREE.Vector3(posx, 0, posz + tileSize);
+            geometry.position = new THREE.Vector3(posx + tileSize / 2, 0, posz + tileSize);
 
             for (var z = 0; z < scale; z++) {
                 movement[sx + z][sy + scale - 1] = 1;
@@ -120,7 +126,7 @@ function createWall(x, y, side, geometry) {
         } else {
 
             geometry = new THREE.BoxGeometry(tileSize, tileSize, wallSize);
-            geometry.position = new THREE.Vector3(posx, 0, posz);
+            geometry.position = new THREE.Vector3(posx + tileSize / 2, 0, posz);
 
             for (var z = 0; z < scale; z++) {
                 movement[sx + z][sy] = 1;
@@ -139,7 +145,7 @@ function createWall(x, y, side, geometry) {
             vertsz.forEach((v) => { v[0] += tileSize })
 
             geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize);
-            geometry.position = new THREE.Vector3(posx, 0, posz + tileSize);
+            geometry.position = new THREE.Vector3(posx + tileSize , 0, posz + tileSize / 2);
 
             for (var z = 0; z < scale; z++) {
                 movement[sx + scale - 1][sy + z] = 1;
@@ -148,7 +154,7 @@ function createWall(x, y, side, geometry) {
         } else {
 
             geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize);
-            geometry.position = new THREE.Vector3(posx, 0, posz);
+            geometry.position = new THREE.Vector3(posx, 0, posz + tileSize / 2);
 
             for (var z = 0; z < scale; z++) {
                 movement[sx + scale - 1][sy + z] = 1;
@@ -177,7 +183,7 @@ function createFloorGeometry() {
         new THREE.Vector3(1 * x * tileSize, 0, -0 * y * tileSize),
         new THREE.Vector3(1 * x * tileSize, 0, 1 * y * tileSize)
 
-    var geometry = new THREE.BoxGeometry(x * tileSize, 0, y * tileSize);
+    var geometry = new THREE.BoxGeometry(x * tileSize, 0, y * tileSize, x, x, x);
     geometry.position = new THREE.Vector3(0, 0, 0);
 
     return geometry;
