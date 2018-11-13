@@ -14,6 +14,10 @@ public class Camera_Controller : MonoBehaviour
     public RotationAxis axis = RotationAxis.RotMouseX;
 
     [SerializeField] PlayerController player;
+    [SerializeField] Animator anim;
+    [SerializeField] Camera FPScam;
+    private Vector3 cameraPos;
+    private Vector3 cameraOffset;
     //maximum and minimum vertical angles the player can look
     private float minimumV;
     private float maximumV;
@@ -25,9 +29,10 @@ public class Camera_Controller : MonoBehaviour
 
     void Start()
     {
-        minimumV = -65f;
-        maximumV = 65f;
+        minimumV = -40f;
+        maximumV = 40f;
 
+        FPScam.transform.position = player.transform.position;
         //lock mouse cursor and make it invisible
         Cursor.lockState = CursorLockMode.Locked;
         //unlock mouse cursor when escape is pressed
@@ -56,6 +61,11 @@ public class Camera_Controller : MonoBehaviour
                 float rotationY = transform.localEulerAngles.y;
                 transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
             }
+
+            cameraPos = anim.GetBoneTransform(HumanBodyBones.Head).position;
+            cameraOffset = player.transform.forward / 10f;
+            cameraOffset.y = .25f;
+            FPScam.transform.position = cameraPos + cameraOffset;
         }
     }
 }
