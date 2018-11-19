@@ -106,6 +106,7 @@ function createWall(x, y, side, geometry) {
 
     var gv = [];
     if (side == 0 || side == 3) {
+        //posz += wallSize / 2;
         //top/bottom
         var vertsz = [
             [posx, 0, posz],
@@ -118,17 +119,22 @@ function createWall(x, y, side, geometry) {
         if (side == 3) {
             vertsz.forEach((v) => { v[2] += tileSize })
 
-            geometry = new THREE.BoxGeometry(tileSize + wallSize, tileSize, wallSize);
-            geometry.position = new THREE.Vector3(posx + tileSize / 2, 0, posz + tileSize);
+            geometry = new THREE.BoxGeometry(tileSize, tileSize, wallSize);
+            var localX = posx + tileSize / 2
+            var localZ = posz - wallSize / 2 + tileSize
+
+            geometry.position = new THREE.Vector3(localX, 0, localZ);
 
             for (var z = 0; z < scale; z++) {
                 movement[sx + z][sy + scale - 1] = 1;
             }
 
         } else {
+            var localX = posx + tileSize / 2
+            var localZ = posz + wallSize / 2
 
-            geometry = new THREE.BoxGeometry(tileSize + wallSize, tileSize, wallSize);
-            geometry.position = new THREE.Vector3(posx + tileSize / 2, 0, posz);
+            geometry = new THREE.BoxGeometry(tileSize, tileSize, wallSize);
+            geometry.position = new THREE.Vector3(localX, 0, localZ);
 
             for (var z = 0; z < scale; z++) {
                 movement[sx + z][sy] = 1;
@@ -136,6 +142,7 @@ function createWall(x, y, side, geometry) {
         }
         gv = vertsz;
     } else {
+
         //left/right
         var vertsz = [
             [posx, 0, posz],
@@ -145,19 +152,29 @@ function createWall(x, y, side, geometry) {
         ];
         if (side == 2) {
             vertsz.forEach((v) => { v[0] += tileSize })
+
+            var localX = tileSize - wallSize / 2
+            var localZ = tileSize / 2 //+ wallSize
+
             geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize);
-            geometry.position = new THREE.Vector3(posx + tileSize, 0, posz + tileSize);
+            geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ);
+
+            var localOffsetZ = 0;
             if (map[x][y][0] == 1) {
-                geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize - wallSize / 2);
-                geometry.position = new THREE.Vector3(posx + tileSize, 0, posz + tileSize / 2 + wallSize);
+                geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize - wallSize);
+                localOffsetZ = wallSize / 2 //-.5 * wallSize;//(tileSize - wallSize) / 2 - tileSize / 2
+                geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ + localOffsetZ);
+
             }
             if (map[x][y][3] == 1) {
                 geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize - wallSize);
-                geometry.position = new THREE.Vector3(posx + tileSize, 0, posz + tileSize / 2 - wallSize);
+                localOffsetZ = wallSize / -2
+                geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ + localOffsetZ);
+
             }
             if (map[x][y][0] == 1 && map[x][y][3] == 1) {
-                geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize - wallSize);
-                geometry.position = new THREE.Vector3(posx + tileSize, 0, posz + tileSize / 2 + wallSize / 2);
+                geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize - wallSize * 2);
+                geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ);
             }
 
 
@@ -166,9 +183,30 @@ function createWall(x, y, side, geometry) {
             }
 
         } else {
+            var localX = 0 + wallSize / 2
+            var localZ = tileSize / 2 //+ wallSize
 
             geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize);
-            geometry.position = new THREE.Vector3(posx, 0, posz + tileSize / 2 + wallSize * (1 / 8));
+            geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ);
+
+            var localOffsetZ = 0;
+            if (map[x][y][0] == 1) {
+                geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize - wallSize);
+                localOffsetZ = wallSize / 2 //-.5 * wallSize;//(tileSize - wallSize) / 2 - tileSize / 2
+                geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ + localOffsetZ);
+
+            }
+            if (map[x][y][3] == 1) {
+                geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize - wallSize);
+                localOffsetZ = wallSize / -2
+                geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ + localOffsetZ);
+
+            }
+            if (map[x][y][0] == 1 && map[x][y][3] == 1) {
+                geometry = new THREE.BoxGeometry(wallSize, tileSize, tileSize - wallSize * 2);
+                geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ);
+            }
+
 
             for (var z = 0; z < scale; z++) {
                 movement[sx + scale - 1][sy + z] = 1;
@@ -198,7 +236,7 @@ function createFloorGeometry() {
         new THREE.Vector3(1 * x * tileSize, 0, 1 * y * tileSize)
 
     var geometry = new THREE.BoxGeometry(x * tileSize, 0, y * tileSize);
-    //geometry.position = new THREE.Vector3(x * tileSize / 2, 0, y * tileSize / 2);
+    geometry.position = new THREE.Vector3(x * tileSize / 2, 0, y * tileSize / 2);
 
     return geometry;
 }
