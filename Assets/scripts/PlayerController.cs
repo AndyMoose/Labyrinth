@@ -10,15 +10,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animations;
     [SerializeField] private CharacterController characterCont;
 
-    private bool isAttacking;
+    //private bool isAttacking;
     public bool isDead;
+    public bool isHoldingSword;
 
     void Start()
     {    
         maxSpeed = 5f;
         gravity = -9.8f;
-        isAttacking = false;
         isDead = false;
+        isHoldingSword = false;
     }
 
     void Update()
@@ -68,17 +69,19 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                if (isAttacking == false)
+                if (isHoldingSword == true)
                 {
+                    animations.SetBool("isHoldingSword", isHoldingSword);
+                    animations.SetTrigger("isAttacking");
                     AttackFrame1();
-                    isAttacking = true;
+
+                } else if (isHoldingSword == false)
+                {
+                    animations.SetBool("isHoldingSword", isHoldingSword);
+                    animations.SetTrigger("isAttacking");
+                    AttackFrameTorch();
                 }
             }
-            else
-            {
-                isAttacking = false;
-            }
-            animations.SetBool("isAttacking", isAttacking);
         }
     }
     /*
@@ -105,7 +108,15 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             Debug.Log("Did Hit");
         }
-
+    }
+    private void AttackFrameTorch()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            Debug.Log("Did Hit");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -114,6 +125,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "pickup")
         {
             sword.SetActive(true);
+            isHoldingSword = true;
             Destroy(other.gameObject);
         }
     }
