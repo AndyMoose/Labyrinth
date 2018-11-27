@@ -20,6 +20,8 @@ public class leftturning : StateMachineBehaviour {
         animator.gameObject.transform.Rotate(0, -90, 0);
         animator.gameObject.GetComponent<Minotaur_Script>().turncount = true;
         animator.gameObject.GetComponent<Minotaur_Script>().turning = false;
+        animator.SetFloat("Blend", 0);
+        animator.gameObject.GetComponent<Minotaur_Script>().t = 0;
         // animator.gameObject.transform.localPosition += animator.gameObject.transform.forward * -.75f;
     }
 
