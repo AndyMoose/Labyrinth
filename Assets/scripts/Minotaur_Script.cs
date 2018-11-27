@@ -28,7 +28,7 @@ public class Minotaur_Script : MonoBehaviour {
     void Start()
     { 
         running = false;
-        t = 1;
+        t = 0;
         beingHit = false;
         seesPlayer = false;
         turning = false;
@@ -95,14 +95,14 @@ public class Minotaur_Script : MonoBehaviour {
             if(t < 1)
             {
                 animations.SetFloat("Blend", t);
-                t += .05f;
+                t += .04f;
             }
             else if (running && t <= 2)
             {
                 animations.SetFloat("Blend", t);
                 t += .02f;
             }
-            else if (!running && t >= 1)
+            else if (!running && t > 1)
             {
                 animations.SetFloat("Blend", t);
                 t -= .02f;
