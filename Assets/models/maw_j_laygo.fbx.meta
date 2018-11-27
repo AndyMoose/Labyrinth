@@ -126,27 +126,7 @@ ModelImporter:
     7400000: mixamo.com
     9500000: //RootNode
     13700000: MAW
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: MAW_diffuse
-    second: {fileID: 2800000, guid: 64a8a228b2709f14390ca187f481eaa6, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: MAW_glow
-    second: {fileID: 2800000, guid: 373def82e8362b447955984ff04c3104, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: MAW_normal
-    second: {fileID: 2800000, guid: 3d9b8f1f11e595045a23a574601d6b0c, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: maria_specular
-    second: {fileID: 2800000, guid: b3e8709743518a743822e81817738aec, type: 3}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
