@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (isAttacking == false)
                 {
+                    AttackFrame1();
                     isAttacking = true;
                 }
             }
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour
             animations.SetBool("isAttacking", isAttacking);
         }
     }
-
+    /*
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         //need to get collision between minotaur and player, if the minotaur is charging then set isHit to true, otherwise its false.
@@ -94,8 +95,19 @@ public class PlayerController : MonoBehaviour
                 isDead = true;
             }
         }
+    }
+    */
+    private void AttackFrame1()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            Debug.Log("Did Hit");
+        }
 
     }
+
     private void OnTriggerEnter(Collider other)
     {
          //deletes sword on collision with player
