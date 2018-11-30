@@ -73,13 +73,13 @@ public class PlayerController : MonoBehaviour
                 {
                     animations.SetBool("isHoldingSword", isHoldingSword);
                     animations.SetTrigger("isAttacking");
-                    AttackFrame1();
+                    //AttackFrame1();
 
                 } else if (isHoldingSword == false)
                 {
                     animations.SetBool("isHoldingSword", isHoldingSword);
                     animations.SetTrigger("isAttacking");
-                    AttackFrameTorch();
+                    //AttackFrameTorch();
                 }
             }
         }
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
+            //Debug.Log("Did Hit");
         }
     }
     private void AttackFrameTorch()
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
+            //Debug.Log("Did Hit");
         }
     }
 
