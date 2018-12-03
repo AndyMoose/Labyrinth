@@ -51,7 +51,7 @@ function createModel() {
         var zip = new JSZip();
         zip.file(file, result.data);
         zip.file(file + ".txt", JSON.stringify(map));
-        zip.file(file + "_movment.txt", JSON.stringify(map));
+        zip.file(file + "_movment.txt", JSON.stringify(movement));
         zip.file(file + ".obj", exportToObj(scene));
         //var tex = zip.folder("textures");
         //tex.file("floor_small.jpg", getBase64Image(imgz), { base64: true });
