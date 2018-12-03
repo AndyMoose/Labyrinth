@@ -12,7 +12,7 @@ public class astar : MonoBehaviour
     [SerializeField] private GameObject Leader;
     [SerializeField] private Transform ground;
     //private WorldDecomposer worldDecomposer;
-	[SerializeField] private Transform Player;
+    [SerializeField] private Transform Player;
 
 
 
@@ -24,14 +24,14 @@ public class astar : MonoBehaviour
     private float radiusOfSat;
 
     private List<node> targets;
-	MapData loadedData;
+    MapData loadedData;
     private int targetIdx = 1;
     //private bool stopping = false;
     //private int stopon = 0;
     //private int stopsteps = 6000;
 
-	int h = 20;
-	int w = 20;
+    int h = 20;
+    int w = 20;
 
     void Start()
     {
@@ -50,6 +50,9 @@ public class astar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //node PlayerNode = nodeFromVec3(Player.transform.position);
+        //Debug.Log(PlayerNode.getX() + ":" + PlayerNode.getY());
+
         if (hasTarget)
         {
 
@@ -103,8 +106,8 @@ public class astar : MonoBehaviour
         //node start = new node((Mathf.FloorToInt(trans.position.z) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(trans.position.x) + 50) / worldDecomposer.nodeSize);
         //node goal = new node((Mathf.FloorToInt(z_) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(x_) + 50) / worldDecomposer.nodeSize);
 
-		node start = new node(0,0); //mintar
-		node goal = new node(0,0); //player
+        node start = new node(0, 0); //mintar
+        node goal = new node(0, 0); //player
 
         bool found = false;
 
@@ -285,7 +288,12 @@ public class astar : MonoBehaviour
 
     Vector3 targetNode(node obj)
     {
-		return new Vector3(obj.getY(), 0, obj.getX());
+        return new Vector3(obj.getY(), 0, obj.getX());
         //return new Vector3((obj.getY() * worldDecomposer.nodeSize) - 50 + (worldDecomposer.nodeSize / 2f), 0, (obj.getX() * worldDecomposer.nodeSize) - 50 + (worldDecomposer.nodeSize / 2f));
+    }
+    node nodeFromVec3(Vector3 vec)
+    {
+        //(-42.3, 0.6, 98.6) : 8,19
+        return new node((int)Mathf.Floor(vec.x / -5), (int)Mathf.Floor(vec.z / 5));
     }
 }
