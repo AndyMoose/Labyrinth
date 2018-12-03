@@ -296,4 +296,8 @@ public class astar : MonoBehaviour
         //(-42.3, 0.6, 98.6) : 8,19
         return new node((int)Mathf.Floor(vec.x / -5), (int)Mathf.Floor(vec.z / 5));
     }
+	Vector3 vec3FromNode(node node)
+	{
+		return new Vector3(-5 * node.getX(), 0, 5 * node.getY());
+	}
 }
