@@ -43,6 +43,7 @@ function createModel() {
 
 
 
+
         //saveString(result.data, 'scene.dae');
         //download(file, result.data);
         //download(file + ".txt", JSON.stringify(map));
@@ -209,7 +210,7 @@ function createWall(x, y, side, geometry) {
 
 
             for (var z = 0; z < scale; z++) {
-                movement[sx + scale - 1][sy + z] = 1;
+                movement[sx][sy + z] = 1;
             }
         }
         gv = vertsz;
