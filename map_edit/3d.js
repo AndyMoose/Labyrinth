@@ -125,10 +125,13 @@ function createWall(x, y, side, geometry) {
             var localZ = posz - wallSize / 2 + tileSize
 
             geometry.position = new THREE.Vector3(localX, 0, localZ);
-
-            for (var z = 0; z < scale; z++) {
-                movement[sx + z][sy + scale] = 1;
+            for(var zz = 0; zz < 2; zz++)
+            {
+                for (var z = -1; z < scale + 1; z++) {
+                    movement[sx + z][sy + scale-1 + zz] = 1;
+                }
             }
+           
 
         } else {
             var localX = posx + tileSize / 2
@@ -137,8 +140,11 @@ function createWall(x, y, side, geometry) {
             geometry = new THREE.BoxGeometry(tileSize, tileSize, wallSize);
             geometry.position = new THREE.Vector3(localX, 0, localZ);
 
-            for (var z = 0; z < scale; z++) {
-                movement[sx + z][sy] = 1;
+            for(var zz = 0; zz < 2; zz++)
+            {
+                for (var z = -1; z < scale + 1; z++) {
+                    movement[sx + z][sy + zz] = 1;
+                }
             }
         }
         gv = vertsz;
@@ -178,9 +184,11 @@ function createWall(x, y, side, geometry) {
                 geometry.position = new THREE.Vector3(posx + localX, 0, posz + localZ);
             }
 
-
-            for (var z = 0; z < scale; z++) {
-                movement[sx + scale][sy + z] = 1;
+            for(var zz = 0; zz < 2; zz++)
+            {
+                for (var z = -1; z < scale + 1; z++) {
+                    movement[sx + scale-1 + zz][sy + z] = 1;
+                }
             }
 
         } else {
@@ -209,8 +217,11 @@ function createWall(x, y, side, geometry) {
             }
 
 
-            for (var z = 0; z < scale; z++) {
-                movement[sx][sy + z] = 1;
+            for(var zz = 0; zz < 2; zz++)
+            {
+                for (var z = -1; z < scale + 1; z++) {
+                    movement[sx + zz][sy + z] = 1;
+                }
             }
         }
         gv = vertsz;
