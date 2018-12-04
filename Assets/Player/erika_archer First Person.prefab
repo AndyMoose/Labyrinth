@@ -2230,7 +2230,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1034266146698500}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -42.608025, y: 1.14, z: 98.25551}
+  m_LocalPosition: {x: -72.76077, y: 62.40603, z: 235.9068}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4440684696561898}
@@ -2726,7 +2726,7 @@ MonoBehaviour:
   player: {fileID: 114705037419265888}
   anim: {fileID: 95188026118656074}
   FPScam: {fileID: 20612278931674994}
-  sensitivity: 0
+  sensitivity: 10
   sensitivityH: 10
   sensitivityV: 10
   rotationX: 0
@@ -2745,7 +2745,7 @@ MonoBehaviour:
   player: {fileID: 114705037419265888}
   anim: {fileID: 95188026118656074}
   FPScam: {fileID: 20612278931674994}
-  sensitivity: 0
+  sensitivity: 10
   sensitivityH: 10
   sensitivityV: 10
   rotationX: 0
@@ -2763,6 +2763,7 @@ MonoBehaviour:
   sword: {fileID: 0}
   animations: {fileID: 95188026118656074}
   characterCont: {fileID: 143856979915056028}
+  pauseMenu: {fileID: 0}
   isDead: 0
   isHoldingSword: 0
 --- !u!137 &137207975670541230
