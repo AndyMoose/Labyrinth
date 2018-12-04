@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private float gravity;
     [SerializeField] private Animator animations;
     [SerializeField] private CharacterController characterCont;
+	public Canvas pauseMenu;
 
     //private bool isAttacking;
     public bool isDead;
@@ -26,6 +27,11 @@ public class PlayerController : MonoBehaviour
     {
         PlayerAttack();
         PlayerMovement();
+		if (Input.GetKeyDown (KeyCode.Escape) && !pauseMenu.isActiveAndEnabled) {
+			pauseMenu.gameObject.SetActive (true);
+			Time.timeScale = 0f;
+		}
+
     }
 
     void PlayerMovement()
@@ -103,7 +109,7 @@ public class PlayerController : MonoBehaviour
     private void AttackFrame1()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+		if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity) && Time.timeScale != 0f)
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             Debug.Log("Did Hit");
@@ -112,7 +118,7 @@ public class PlayerController : MonoBehaviour
     private void AttackFrameTorch()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+		if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity)  && Time.timeScale != 0f)
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             Debug.Log("Did Hit");
