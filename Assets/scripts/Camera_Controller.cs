@@ -22,8 +22,8 @@ public class Camera_Controller : MonoBehaviour
     private float minimumV;
     private float maximumV;
 
-    public float sensitivity; 
-
+    public float sensitivityx; 
+	public float sensitivityy; 
     //set the camera sensitivity
     [SerializeField] private float sensitivityH;
     [SerializeField] private float sensitivityV;
@@ -38,8 +38,8 @@ public class Camera_Controller : MonoBehaviour
         //lock mouse cursor and make it invisible
         Cursor.lockState = CursorLockMode.Locked;
         //unlock mouse cursor when escape is pressed
-        sensitivityH = sensitivity;
-        sensitivityV = sensitivity;
+        sensitivityH = sensitivityx;
+        sensitivityV = sensitivityy;
 
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -52,8 +52,8 @@ public class Camera_Controller : MonoBehaviour
     void Update()
     {
         //rotate horizontally   
-        sensitivityH = sensitivity;
-        sensitivityV = sensitivity;
+        sensitivityH = sensitivityx;
+        sensitivityV = sensitivityy;
         if (!player.isDead)
         {
             if (axis == RotationAxis.RotMouseX)
