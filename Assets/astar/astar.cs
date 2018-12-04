@@ -79,22 +79,24 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
+    int h2 = 20*5;
+    int w2 = 20*5;
     List<node> astar(float x_, float z_)
     {
 
         //  TODO Auto-generated method stub
         //  create a 2d world of ints
-        int[,] world = worldDecomposer.worldData; //driver.generateWorld();
+        int[,] world = new int[w2,h2]; //driver.generateWorld();
         //  a list for the nodes that need to be searched
         List<node> openList = new List<node>();
         //  a list for the nodes that have been searched
         List<node> closedList = new List<node>();
-        int[,] closedArray = new int[worldDecomposer.rows, worldDecomposer.cols];
+        int[,] closedArray = new int[w2, h2];
         //  a list that contains the path from start to goal
         List<node> path = new List<node>();
         //  the start and goal nodes
-        node start = new node((Mathf.FloorToInt(trans.position.z) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(trans.position.x) + 50) / worldDecomposer.nodeSize);
-        node goal = new node((Mathf.FloorToInt(z_) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(x_) + 50) / worldDecomposer.nodeSize);
+        node start =  //new node((Mathf.FloorToInt(trans.position.z) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(trans.position.x) + 50) / worldDecomposer.nodeSize);
+        node goal = //new node((Mathf.FloorToInt(z_) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(x_) + 50) / worldDecomposer.nodeSize);
 
         bool found = false;
 
@@ -277,7 +279,16 @@ public class CharacterMovement : MonoBehaviour
 
     Vector3 targetNode(node obj)
     {
+        return vec3FromNode(obj);
         //return new Vector3((obj.getY() * worldDecomposer.nodeSize) - 50 + (worldDecomposer.nodeSize / 2f), 0, (obj.getX() * worldDecomposer.nodeSize) - 50 + (worldDecomposer.nodeSize / 2f));
+    }
+    Vector3 vec3FromNode(node node)
+	{
+		return new Vector3(-1 * node.getX(), 0, 1 * node.getY());
+	}
+    node nodeFromVec3(Vector3 vec)
+    {
+        return new node((int)(-1 * vec.x), (int)(1 * vec.z));
     }
     void run()
     {
