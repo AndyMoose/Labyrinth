@@ -41,11 +41,7 @@ public class Camera_Controller : MonoBehaviour
         sensitivityH = sensitivity;
         sensitivityV = sensitivity;
 
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+       
     }
     //put in slider
     
@@ -82,5 +78,15 @@ public class Camera_Controller : MonoBehaviour
             cameraOffset.y = -0.25f;
             FPScam.transform.position = cameraPos + cameraOffset;
         }
+		if (Input.GetKey(KeyCode.Escape))
+		{
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+		}
+		if (Input.GetKey(KeyCode.L) && Cursor.lockState == CursorLockMode.None)
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+		}
     }
 }

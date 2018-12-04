@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private float gravity;
     [SerializeField] private Animator animations;
     [SerializeField] private CharacterController characterCont;
+	public Canvas pauseMenu;
 
     //private bool isAttacking;
     public bool isDead;
@@ -26,6 +27,10 @@ public class PlayerController : MonoBehaviour
     {
         PlayerAttack();
         PlayerMovement();
+		if (Input.GetKeyDown (KeyCode.Escape) && !pauseMenu.isActiveAndEnabled) {
+			Time.timeScale = 0f;
+			pauseMenu.gameObject.SetActive (true);
+		}
     }
 
     void PlayerMovement()

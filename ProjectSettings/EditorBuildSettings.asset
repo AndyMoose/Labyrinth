@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: f093ed6a37dc87746b7dcf5f434888f0
   - enabled: 1
-    path: Assets/main.unity
-    guid: 4491d6ba892fcdc4c8993e0fddfb2bad
+    path: Assets/Scenes/Maze.unity
+    guid: dad8075b22b9b634aa288d6b178eda59
   m_configObjects: {}
