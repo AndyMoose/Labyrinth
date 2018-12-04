@@ -7,11 +7,12 @@ public class loadSceneOnClick : MonoBehaviour {
 
     public AudioClip music;
 
+
 	public void LoadSceneByIndex(int sceneIndex)
 	{
         MusicManager.Instance.MusicSource.Stop();
 		SceneManager.LoadScene (sceneIndex);
-        MusicManager.Instance.PlayMusic(music);
+		MusicManager.Instance.Play(music);
             
 
 	}
