@@ -78,7 +78,7 @@ public class Camera_Controller : MonoBehaviour
         } else
         {
             cameraPos = anim.GetBoneTransform(HumanBodyBones.Head).position;
-            cameraOffset = player.transform.forward / 20f;
+            cameraOffset = player.transform.forward / 25f;
             cameraOffset.y = -0.25f;
             FPScam.transform.position = cameraPos + cameraOffset;
         }
