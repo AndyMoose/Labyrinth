@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject sword;
     public GameObject winScreen;
+    public GameObject resetButton;
     private float maxSpeed;
     private float gravity;
     [SerializeField] private Animator animations;
     [SerializeField] private CharacterController characterCont;
-	public Canvas pauseMenu;
+    public Canvas pauseMenu;
 
     //private bool isAttacking;
     public bool isDead;
@@ -24,7 +26,7 @@ public class PlayerController : MonoBehaviour
         gravity = -9.8f;
         isDead = false;
         isHoldingSword = false;
-        holdingKey = false;
+        holdingKey = true;
         hasWon = false;
     }
 
@@ -40,6 +42,13 @@ public class PlayerController : MonoBehaviour
 			Time.timeScale = 0f;
 			pauseMenu.gameObject.SetActive (true);
 		}
+
+          if (Input.GetKeyDown("r"))
+            {
+                // reload the scene
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        
     }
 
     void PlayerMovement()
@@ -98,7 +107,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    /*
+    
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         //need to get collision between minotaur and player, if the minotaur is charging then set isHit to true, otherwise its false.
@@ -113,7 +122,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    */
+    
     private void AttackFrame1()
     {
         RaycastHit hit;
@@ -155,6 +164,7 @@ public class PlayerController : MonoBehaviour
             characterCont.enabled = false;
             animations.enabled = false;
             hasWon = true;
+           
         }
     }
 
