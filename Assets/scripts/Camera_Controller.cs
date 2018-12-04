@@ -22,8 +22,7 @@ public class Camera_Controller : MonoBehaviour
     private float minimumV;
     private float maximumV;
 
-    public float sensitivityx; 
-	public float sensitivityy; 
+    public float sensitivity; 
 
     //set the camera sensitivity
     [SerializeField] private float sensitivityH;
@@ -39,18 +38,22 @@ public class Camera_Controller : MonoBehaviour
         //lock mouse cursor and make it invisible
         Cursor.lockState = CursorLockMode.Locked;
         //unlock mouse cursor when escape is pressed
-        sensitivityH = sensitivityx;
-        sensitivityV = sensitivityy;
+        sensitivityH = sensitivity;
+        sensitivityV = sensitivity;
 
-       
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
     //put in slider
     
     void Update()
     {
         //rotate horizontally   
-        sensitivityH = sensitivityx;
-        sensitivityV = sensitivityy;
+        sensitivityH = sensitivity;
+        sensitivityV = sensitivity;
         if (!player.isDead)
         {
             if (axis == RotationAxis.RotMouseX)
@@ -79,16 +82,5 @@ public class Camera_Controller : MonoBehaviour
             cameraOffset.y = -0.25f;
             FPScam.transform.position = cameraPos + cameraOffset;
         }
-
-		if (Input.GetKey(KeyCode.Escape) && Cursor.lockState != CursorLockMode.None)
-		{
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-		} 
-		if (Input.GetKey(KeyCode.L) && Cursor.lockState == CursorLockMode.None)
-		{
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-		} 
     }
 }

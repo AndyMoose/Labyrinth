@@ -17,6 +17,6 @@ public class ChangeFOV : MonoBehaviour {
 
     public void Sensitivity()
     {
-        cameraCont.sensitivityx = SensSlider.value;
+        cameraCont.sensitivity = SensSlider.value;
     }
 }
