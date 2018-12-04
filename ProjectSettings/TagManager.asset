@@ -8,6 +8,8 @@ TagManager:
   - Weapon
   - minotaur
   - pickup
+  - key
+  - WinZone
   layers:
   - Default
   - TransparentFX

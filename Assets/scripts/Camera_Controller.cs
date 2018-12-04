@@ -50,7 +50,7 @@ public class Camera_Controller : MonoBehaviour
         //rotate horizontally   
         sensitivityH = sensitivity;
         sensitivityV = sensitivity;
-        if (!player.isDead)
+        if (!player.isDead && !player.hasWon)
         {
             if (axis == RotationAxis.RotMouseX)
             {

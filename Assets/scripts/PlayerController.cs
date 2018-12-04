@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameObject sword;
+    public GameObject winScreen;
     private float maxSpeed;
     private float gravity;
     [SerializeField] private Animator animations;
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
     //private bool isAttacking;
     public bool isDead;
     public bool isHoldingSword;
+    public bool holdingKey;
+    public bool hasWon;
 
     void Start()
     {    
@@ -21,12 +24,18 @@ public class PlayerController : MonoBehaviour
         gravity = -9.8f;
         isDead = false;
         isHoldingSword = false;
+        holdingKey = false;
+        hasWon = false;
     }
 
     void Update()
     {
-        PlayerAttack();
-        PlayerMovement();
+        if (hasWon == false)
+        {
+            PlayerAttack();
+            PlayerMovement();
+        }
+
 		if (Input.GetKeyDown (KeyCode.Escape) && !pauseMenu.isActiveAndEnabled) {
 			Time.timeScale = 0f;
 			pauseMenu.gameObject.SetActive (true);
@@ -132,6 +141,20 @@ public class PlayerController : MonoBehaviour
             sword.SetActive(true);
             isHoldingSword = true;
             Destroy(other.gameObject);
+        }
+        //deletes key on collision with player
+        if (other.gameObject.tag == "key")
+        {
+            Destroy(other.gameObject);
+            holdingKey = true;
+        }
+        //win game
+        if (other.gameObject.tag == "WinZone" && holdingKey == true)
+        {
+            winScreen.SetActive(true);
+            characterCont.enabled = false;
+            animations.enabled = false;
+            hasWon = true;
         }
     }
 
