@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using System.IO;
 
-public class CharacterMovement : MonoBehaviour
+public class astar : MonoBehaviour
 {
 
     [SerializeField] private Transform trans;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject Leader;
     [SerializeField] private Transform ground;
+
+    [SerializeField] private Transform Player;
 
 
 
@@ -31,8 +34,28 @@ public class CharacterMovement : MonoBehaviour
         maxSpeed = 5f;
         radiusOfSat = 3f;
         turnSpeed = 2.5f;
+        mp = new int[w2, h2];
         //worldDecomposer = Leader.GetComponent<WorldDecomposer>(); //gameObject.GetComponent<HingeJoint>();
+        string filePath = Path.Combine(Application.streamingAssetsPath, "astar/maps/map1.txt");
 
+        if (File.Exists(filePath))
+        {
+            // Read the json from the file into a string
+            string dataAsJson = File.ReadAllText(filePath);
+            string[] lines = dataAsJson.Split('\n');
+            for (int y = 0; y < lines.Length; y++)
+            {
+                string[] linedata = lines[y].Split(',');
+                for (int x = 0; x < linedata.Length; x++)
+                {
+                    mp[y, x] = int.Parse(linedata[x]);
+                    if (mp[y, x] == 1)
+                    {
+                        Debug.DrawRay(vec3FromNode(new node(y, x)), new Vector3(0, 7, 0), Color.red, 60);
+                    }
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -79,14 +102,17 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
-    int h2 = 20*5;
-    int w2 = 20*5;
-    List<node> astar(float x_, float z_)
+    int h2 = 20 * 5;
+    int w2 = 20 * 5;
+
+    int[,] mp;
+    List<node> astarrun()
     {
 
         //  TODO Auto-generated method stub
         //  create a 2d world of ints
-        int[,] world = new int[w2,h2]; //driver.generateWorld();
+        int[,] world = new int[w2, h2]; //driver.generateWorld();
+        world = mp;
         //  a list for the nodes that need to be searched
         List<node> openList = new List<node>();
         //  a list for the nodes that have been searched
@@ -95,8 +121,8 @@ public class CharacterMovement : MonoBehaviour
         //  a list that contains the path from start to goal
         List<node> path = new List<node>();
         //  the start and goal nodes
-        node start =  //new node((Mathf.FloorToInt(trans.position.z) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(trans.position.x) + 50) / worldDecomposer.nodeSize);
-        node goal = //new node((Mathf.FloorToInt(z_) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(x_) + 50) / worldDecomposer.nodeSize);
+        node start = nodeFromVec3(trans.position);  //new node((Mathf.FloorToInt(trans.position.z) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(trans.position.x) + 50) / worldDecomposer.nodeSize);
+        node goal = nodeFromVec3(Player.position); //new node((Mathf.FloorToInt(z_) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(x_) + 50) / worldDecomposer.nodeSize);
 
         bool found = false;
 
@@ -180,9 +206,9 @@ public class CharacterMovement : MonoBehaviour
                         //print(newNode.getX() + "," + newNode.getY());
                         if ((
                                      ((newNode.getX() < 0)
-                                    || ((newNode.getX() >= worldDecomposer.cols)
+                                    || ((newNode.getX() >= w2)
                                     || ((newNode.getY() < 0)
-                                    || (newNode.getY() >= worldDecomposer.rows))))))
+                                    || (newNode.getY() >= h2))))))
                         {
                             // TODO: Warning!!! continue 
 
@@ -283,17 +309,17 @@ public class CharacterMovement : MonoBehaviour
         //return new Vector3((obj.getY() * worldDecomposer.nodeSize) - 50 + (worldDecomposer.nodeSize / 2f), 0, (obj.getX() * worldDecomposer.nodeSize) - 50 + (worldDecomposer.nodeSize / 2f));
     }
     Vector3 vec3FromNode(node node)
-	{
-		return new Vector3(-1 * node.getX(), 0, 1 * node.getY());
-	}
+    {
+        return new Vector3(-1 * node.getX(), 0, 1 * node.getY());
+    }
     node nodeFromVec3(Vector3 vec)
     {
-        return new node((int)(-1 * vec.x), (int)(1 * vec.z));
+        return new node((int)Mathf.Floor(-1 * vec.x), (int)Mathf.Floor(1 * vec.z));
     }
     void run()
     {
         targetIdx = 1;
-        targets = astar();
+        targets = astarrun();
         target = targetNode(targets[0]);
 
         hasTarget = true;
