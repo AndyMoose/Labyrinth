@@ -127,7 +127,7 @@ function createWall(x, y, side, geometry) {
             geometry.position = new THREE.Vector3(localX, 0, localZ);
             for(var zz = 0; zz < 2; zz++)
             {
-                for (var z = -1; z < scale + 1; z++) {
+                for (var z = 0; z < scale + 0; z++) {
                     
                     try{
                         movement[sx + z][sy + scale-1 + zz] = 1;
@@ -148,7 +148,7 @@ function createWall(x, y, side, geometry) {
 
             for(var zz = 0; zz < 2; zz++)
             {
-                for (var z = -1; z < scale + 1; z++) {
+                for (var z = 0; z < scale + 0; z++) {
                     try{
                         movement[sx + z][sy + zz] = 1;
                     } catch {
@@ -196,7 +196,7 @@ function createWall(x, y, side, geometry) {
 
             for(var zz = 0; zz < 2; zz++)
             {
-                for (var z = -1; z < scale + 1; z++) {
+                for (var z = 0; z < scale + 0; z++) {
                    
                     try{
                         movement[sx + scale-1 + zz][sy + z] = 1;
@@ -234,7 +234,7 @@ function createWall(x, y, side, geometry) {
 
             for(var zz = 0; zz < 2; zz++)
             {
-                for (var z = -1; z < scale + 1; z++) {
+                for (var z = 0; z < scale + 0; z++) {
                    
                     try{
                         movement[sx + zz][sy + z] = 1;
