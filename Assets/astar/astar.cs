@@ -28,6 +28,7 @@ public class astar : MonoBehaviour
     //private bool stopping = false;
     //private int stopon = 0;
     //private int stopsteps = 6000;
+    StreamWriter writer;
 
     void Start()
     {
@@ -36,6 +37,9 @@ public class astar : MonoBehaviour
         turnSpeed = 2.5f;
         mp = new int[w2, h2];
         //worldDecomposer = Leader.GetComponent<WorldDecomposer>(); //gameObject.GetComponent<HingeJoint>();
+
+        writer = new StreamWriter(Path.Combine(Application.streamingAssetsPath, "astar/maps/output.txt"), true);
+
         string filePath = Path.Combine(Application.streamingAssetsPath, "astar/maps/map1.txt");
 
         if (File.Exists(filePath))
@@ -56,6 +60,8 @@ public class astar : MonoBehaviour
                 }
             }
         }
+
+        astarrun();
     }
 
     // Update is called once per frame
@@ -102,8 +108,8 @@ public class astar : MonoBehaviour
             }
         }
     }
-    int h2 = 20 * 5;
-    int w2 = 20 * 5;
+    int h2 = 100;
+    int w2 = 100;
 
     int[,] mp;
     List<node> astarrun()
@@ -153,6 +159,7 @@ public class astar : MonoBehaviour
             int min = int.MaxValue;
 
             //  Removes the first element if there is only 1
+            log("count: " + openList.Count + "");
             if ((openList.Count == 1))
             {
                 curNode = openList[0];
@@ -178,6 +185,7 @@ public class astar : MonoBehaviour
                 //  Removes that node for the open List
                 openList.Remove(curNode);
             }
+            log("pos: " + curNode.getX()+":"+curNode.getY());
 
             //  step 2
             //  if the current node is the goal, break out of the search and begin making the
@@ -215,6 +223,7 @@ public class astar : MonoBehaviour
                             continue;
                         }
                         //print(newNode.getX() + "," + newNode.getY());
+                        log("closed: " + closedList.Count);
                         if (node.contains(closedArray, newNode))
                         {
                             continue;
@@ -274,6 +283,7 @@ public class astar : MonoBehaviour
         if ((openList.Count == 0))
         {
             //System.out.//println("A path could not be found");
+
         }
 
         //  generates the path for the agent to use
@@ -323,5 +333,10 @@ public class astar : MonoBehaviour
         target = targetNode(targets[0]);
 
         hasTarget = true;
+    }
+
+    void log(string txt)
+    {
+        writer.WriteLine(txt);
     }
 }

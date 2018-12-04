@@ -37,7 +37,7 @@ public class node
     public int getType(int[,] world)
     {
         // return this.type;
-        return world[this.x, this.y];
+        return world[this.y, this.x];
     }
 
     public int getH()
