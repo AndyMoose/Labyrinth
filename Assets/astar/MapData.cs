@@ -4,5 +4,5 @@ using System.Collections.Generic;
 
 public class MapData
 {
-    public int[,] data;
+    public IList<IList<int>> data { get; set; }
 }

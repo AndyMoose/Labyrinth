@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using System.IO;
 
-public class astar : MonoBehaviour
+public class CharacterMovement : MonoBehaviour
 {
 
     [SerializeField] private Transform trans;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject Leader;
     [SerializeField] private Transform ground;
-    //private WorldDecomposer worldDecomposer;
-    [SerializeField] private Transform Player;
 
 
 
@@ -24,14 +21,10 @@ public class astar : MonoBehaviour
     private float radiusOfSat;
 
     private List<node> targets;
-    MapData loadedData;
     private int targetIdx = 1;
     //private bool stopping = false;
     //private int stopon = 0;
     //private int stopsteps = 6000;
-
-    int h = 20;
-    int w = 20;
 
     void Start()
     {
@@ -40,18 +33,15 @@ public class astar : MonoBehaviour
         turnSpeed = 2.5f;
         //worldDecomposer = Leader.GetComponent<WorldDecomposer>(); //gameObject.GetComponent<HingeJoint>();
 
-        string filePath = Path.Combine(Application.streamingAssetsPath, "astar/maps/map1.txt");
-        string dataAsJson = File.ReadAllText(filePath);
-        // Pass the json to JsonUtility, and tell it to create a GameData object from it
-        loadedData = JsonUtility.FromJson<MapData>(dataAsJson);
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        //node PlayerNode = nodeFromVec3(Player.transform.position);
-        //Debug.Log(PlayerNode.getX() + ":" + PlayerNode.getY());
+
+
+
+
 
         if (hasTarget)
         {
@@ -89,25 +79,22 @@ public class astar : MonoBehaviour
             }
         }
     }
-    List<node> astarrun(float x_, float z_)
+    List<node> astar(float x_, float z_)
     {
 
         //  TODO Auto-generated method stub
         //  create a 2d world of ints
-        int[,] world = loadedData.data; //driver.generateWorld();
+        int[,] world = worldDecomposer.worldData; //driver.generateWorld();
         //  a list for the nodes that need to be searched
         List<node> openList = new List<node>();
         //  a list for the nodes that have been searched
         List<node> closedList = new List<node>();
-        int[,] closedArray = new int[h, w];
+        int[,] closedArray = new int[worldDecomposer.rows, worldDecomposer.cols];
         //  a list that contains the path from start to goal
         List<node> path = new List<node>();
         //  the start and goal nodes
-        //node start = new node((Mathf.FloorToInt(trans.position.z) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(trans.position.x) + 50) / worldDecomposer.nodeSize);
-        //node goal = new node((Mathf.FloorToInt(z_) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(x_) + 50) / worldDecomposer.nodeSize);
-
-        node start = new node(0, 0); //mintar
-        node goal = new node(0, 0); //player
+        node start = new node((Mathf.FloorToInt(trans.position.z) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(trans.position.x) + 50) / worldDecomposer.nodeSize);
+        node goal = new node((Mathf.FloorToInt(z_) + 50) / worldDecomposer.nodeSize, (Mathf.FloorToInt(x_) + 50) / worldDecomposer.nodeSize);
 
         bool found = false;
 
@@ -132,9 +119,11 @@ public class astar : MonoBehaviour
         while ((!found
                     && (openList.Count != 0)))
         {
+
             //  step 1
             //  set a min that any node can beat
             int min = int.MaxValue;
+
             //  Removes the first element if there is only 1
             if ((openList.Count == 1))
             {
@@ -189,9 +178,9 @@ public class astar : MonoBehaviour
                         //print(newNode.getX() + "," + newNode.getY());
                         if ((
                                      ((newNode.getX() < 0)
-                                    || ((newNode.getX() >= w)
+                                    || ((newNode.getX() >= worldDecomposer.cols)
                                     || ((newNode.getY() < 0)
-                                    || (newNode.getY() >= h))))))
+                                    || (newNode.getY() >= worldDecomposer.rows))))))
                         {
                             // TODO: Warning!!! continue 
 
@@ -288,16 +277,14 @@ public class astar : MonoBehaviour
 
     Vector3 targetNode(node obj)
     {
-        return new Vector3(obj.getY(), 0, obj.getX());
         //return new Vector3((obj.getY() * worldDecomposer.nodeSize) - 50 + (worldDecomposer.nodeSize / 2f), 0, (obj.getX() * worldDecomposer.nodeSize) - 50 + (worldDecomposer.nodeSize / 2f));
     }
-    node nodeFromVec3(Vector3 vec)
+    void run()
     {
-        //(-42.3, 0.6, 98.6) : 8,19
-        return new node((int)Mathf.Floor(vec.x / -5), (int)Mathf.Floor(vec.z / 5));
+        targetIdx = 1;
+        targets = astar();
+        target = targetNode(targets[0]);
+
+        hasTarget = true;
     }
-	Vector3 vec3FromNode(node node)
-	{
-		return new Vector3(-5 * node.getX(), 0, 5 * node.getY());
-	}
 }
