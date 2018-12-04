@@ -185,7 +185,7 @@ public class astar : MonoBehaviour
                 //  Removes that node for the open List
                 openList.Remove(curNode);
             }
-            log("pos: " + curNode.getX()+":"+curNode.getY());
+            log("pos: " + curNode.getX() + ":" + curNode.getY());
 
             //  step 2
             //  if the current node is the goal, break out of the search and begin making the
@@ -223,9 +223,23 @@ public class astar : MonoBehaviour
                             continue;
                         }
                         //print(newNode.getX() + "," + newNode.getY());
-                        log("closed: " + closedList.Count);
+
+                        string test = "";
+                        for (int i = 0; i < closedList.Count; i++)
+                        {
+                            test = test + closedList[i].getX() + ":" + closedList[i].getY() + ",";
+                        }
+                        log("closed:" + test);
+                        string test2 = "";
+                        for (int i = 0; i < openList.Count; i++)
+                        {
+                            test2 = test2 + openList[i].getX() + ":" + openList[i].getY() + ",";
+                        }
+                        log("open: " + test2);
+                        //log("closed: " + closedList.Count);
                         if (node.contains(closedArray, newNode))
                         {
+                            //log("hit closed");
                             continue;
                         }
 
@@ -265,7 +279,13 @@ public class astar : MonoBehaviour
                         newNode.setP(curNode);
                         //  Adds it to the open list
                         //print("node added");
-                        openList.Add(newNode);
+                        if (node.contains(closedArray, newNode) == false)
+                        {
+                            openList.Add(newNode);
+                        } else {
+                            log("its not working");
+                        }
+
                     }
 
                 }
